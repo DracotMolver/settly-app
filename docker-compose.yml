@@ -21,6 +21,8 @@ services:
       DB_PORT: "3306"
       DB_USERNAME: "bn_myapp"
       DB_DATABASE: "bitnami_myap"
+    volumes:
+      - './my-project:/api'
 
   client:
     build:
