@@ -1,16 +1,15 @@
 import React from "react";
-import Paper from "@mui/material/Paper";
-import Box from "@mui/material/Box";
 //
 import SingInSection from "../../organisms/SingInSection";
+import TextLink from "../../molecules/TextLink";
+import Card from "../../atoms/Card";
 
 function LoginTemplate() {
   return (
-    <Paper elevation={1}>
-      <Box p={4}>
-        <SingInSection />
-      </Box>
-    </Paper>
+    <Card>
+      <SingInSection />
+      <TextLink helpText="No account yet?" linkText="Create one here." />
+    </Card>
   );
 }
 

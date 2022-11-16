@@ -1,17 +1,17 @@
 import { Routes, Route, BrowserRouter } from "react-router-dom";
-import Container from "@mui/material/Container";
+//
 import LoginScreen from "../screens/LoginScreen";
+import RegisterScreen from "../screens/RegisterScreen";
+import ClientListScreen from "../screens/ClientListScreen";
 
 function router() {
   return (
     <BrowserRouter>
-      <Container maxWidth="sm">
-        <Routes>
-          <Route exact path="/" element={<LoginScreen />}>
-            <Route exact path="/sing-up" element={<LoginScreen />} />
-          </Route>
-        </Routes>
-      </Container>
+      <Routes>
+        <Route exact path="/" element={<LoginScreen />} />
+        <Route path="/sing-up" element={<RegisterScreen />} />
+        <Route path="/dashboard/clients" element={<ClientListScreen />} />
+      </Routes>
     </BrowserRouter>
   );
 }

@@ -5,7 +5,8 @@ const proptypes = {
   disabled: PropTypes.bool,
   hasError: PropTypes.bool,
   isSuccess: PropTypes.bool,
-  text: PropTypes.string.isRequired
+  text: PropTypes.string.isRequired,
+  onPress: PropTypes.func.isRequired,
 };
 
 export default proptypes;

@@ -5,11 +5,13 @@ import Grid from "@mui/material/Grid";
 import Field from "../../atoms/Field";
 import ButtonState from "../../atoms/ButtonState";
 
-function SingInSection() {
+function SingUpSection() {
   const { control, handleSubmit } = useForm({
     defaultValues: {
+      name: "",
       email: "",
       password: "",
+      passwordConfirmation: "",
     },
   });
 
@@ -18,12 +20,20 @@ function SingInSection() {
   return (
     <Grid container item>
       <Controller
+        name="name"
+        rules={{ required: true }}
+        control={control}
+        render={({ field, fieldState: { error } }) => (
+          <Field label="Name" {...field} required hasError={Boolean(error)} />
+        )}
+      />
+      <Controller
         name="email"
         rules={{ required: true }}
         control={control}
         render={({ field, fieldState: { error } }) => (
           <Field
-            label="Email Adress"
+            label="Email Address"
             {...field}
             required
             hasError={Boolean(error)}
@@ -43,11 +53,24 @@ function SingInSection() {
           />
         )}
       />
-      <ButtonState text="Sign In" onPress={handleSubmit(onSubmitSucces)} />
+      <Controller
+        name="passwordConfirmation"
+        rules={{ required: true }}
+        control={control}
+        render={({ field, fieldState: { error } }) => (
+          <Field
+            label="Repeat Password"
+            {...field}
+            required
+            hasError={Boolean(error)}
+          />
+        )}
+      />
+      <ButtonState text="Sign Up" onPress={handleSubmit(onSubmitSucces)} />
     </Grid>
   );
 }
 
-SingInSection.displayName = "SingInSection";
+SingUpSection.displayName = "SingUpSection";
 
-export default SingInSection;
+export default SingUpSection;

@@ -3,6 +3,7 @@ const defaultProps = {
   disabled: false,
   hasError: false,
   isSuccess: false,
+  onPress: false,
   text: "",
 };
 

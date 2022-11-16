@@ -5,6 +5,7 @@ const proptypes = {
   onChange: PropTypes.func.isRequired,
   value: PropTypes.string.isRequired,
   required: PropTypes.bool,
+  hasError: PropTypes.bool,
 };
 
 export default proptypes;
