@@ -1,6 +1,5 @@
 import React from "react";
 import Button from "@mui/material/Button";
-import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 // 
 import defaultProps from "./settings/defaultprops";
@@ -20,7 +19,7 @@ function ButtonState({ isPrimary, isSuccess, disabled, hasError, text ,onPress})
   }
 
   return (
-    <Box component={Grid} item mt={3} mb={3}>
+    <Grid item mt={3} mb={3}>
       <Button
         variant={isPrimary ? "contained" : "outlined"}
         disabled={disabled}
@@ -29,7 +28,7 @@ function ButtonState({ isPrimary, isSuccess, disabled, hasError, text ,onPress})
       >
         {text}
       </Button>
-    </Box>
+    </Grid>
   );
 }
 

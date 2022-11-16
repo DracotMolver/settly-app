@@ -4,18 +4,28 @@ import Grid from "@mui/material/Grid";
 //
 import Field from "../../atoms/Field";
 import ButtonState from "../../atoms/ButtonState";
+import UploadInput from "../../atoms/UploadInput";
 
-function SingUpSection() {
+function AddClientForm() {
   const { control, handleSubmit } = useForm({
     defaultValues: {
       name: "",
       email: "",
-      password: "",
-      passwordConfirmation: "",
+      picture: "",
     },
   });
 
-  function onSubmitSucces(value) {}
+  function onSubmitSucces(value) {
+    /*
+    const formData = new FormData();
+        formData.append("file", data.file[0]);
+
+        const res = await fetch("http://localhost:5000/upload-file", {
+            method: "POST",
+            body: formData,
+        }).then((res) => res.json());
+        alert(JSON.stringify(`${res.message}, status: ${res.status}`));*/
+  }
 
   return (
     <Grid container item>
@@ -24,7 +34,7 @@ function SingUpSection() {
         rules={{ required: true }}
         control={control}
         render={({ field, fieldState: { error } }) => (
-          <Field label="Name" {...field} required hasError={Boolean(error)} />
+          <Field label="Name" required hasError={Boolean(error)} {...field} />
         )}
       />
       <Controller
@@ -34,43 +44,31 @@ function SingUpSection() {
         render={({ field, fieldState: { error } }) => (
           <Field
             label="Email Address"
-            {...field}
             required
             hasError={Boolean(error)}
+            {...field}
           />
         )}
       />
       <Controller
-        name="password"
-        rules={{ required: true }}
+        name="picture"
         control={control}
         render={({ field, fieldState: { error } }) => (
-          <Field
-            label="Password"
-            {...field}
-            required
+          <UploadInput
+            text="Upload Your Picture"
             hasError={Boolean(error)}
+            {...field}
           />
         )}
       />
-      <Controller
-        name="passwordConfirmation"
-        rules={{ required: true }}
-        control={control}
-        render={({ field, fieldState: { error } }) => (
-          <Field
-            label="Repeat Password"
-            {...field}
-            required
-            hasError={Boolean(error)}
-          />
-        )}
+      <ButtonState
+        text="Add New Client"
+        onPress={handleSubmit(onSubmitSucces)}
       />
-      <ButtonState text="Sign Up" onPress={handleSubmit(onSubmitSucces)} />
     </Grid>
   );
 }
 
-SingUpSection.displayName = "SingUpSection";
+AddClientForm.displayName = "AddClientForm";
 
-export default SingUpSection;
+export default AddClientForm;

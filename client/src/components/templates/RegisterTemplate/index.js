@@ -1,12 +1,12 @@
 import React from "react";
 //
 import Card from "../../atoms/Card";
-import SingUpSection from "../../organisms/SingUpSection";
+import SingUpForm from "../../organisms/SingUpForm";
 
 function RegisterTemplate() {
   return (
     <Card>
-      <SingUpSection />
+      <SingUpForm />
     </Card>
   );
 }
