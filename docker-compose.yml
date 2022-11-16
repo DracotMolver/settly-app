@@ -1,0 +1,34 @@
+version: "3.7"
+
+services:
+  db:
+    image: docker.io/bitnami/mariadb:10.6
+    environment:
+      # ALLOW_EMPTY_PASSWORD is recommended only for development.
+      ALLOW_EMPTY_PASSWORD: "yes"
+      MARIADB_USER: bn_myapp
+      MARIADB_DATABASE: bitnami_myapp
+
+  api:
+    image: docker.io/bitnami/laravel:9
+    container_name: settly_api
+    ports:
+      - 8000:8000
+    depends_on:
+      - db
+    environment:
+      DB_HOST: "db"
+      DB_PORT: "3306"
+      DB_USERNAME: "bn_myapp"
+      DB_DATABASE: "bitnami_myap"
+
+  client:
+    build:
+      context: ./client
+    volumes:
+      - ./client:/client
+      - /client/node_modules
+    container_name: settly_client
+    ports:
+      - 8080:8080
+    stdin_open: true
