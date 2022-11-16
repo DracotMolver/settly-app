@@ -1,3 +1,5 @@
+// client frontend
+
 client/node_modules
 
 client/package-lock.json
@@ -6,3 +8,24 @@ client/.DS_Store
 
 .DS_Store
 
+// api backend
+
+
+api/node_modules
+api/public/build
+api/public/hot
+api/public/storage
+api/storage/*.key
+api/vendor
+api/.env
+api/.env.backup
+api/.env.production
+api/.phpunit.result.cache
+api/Homestead.json
+api/Homestead.yaml
+api/auth.json
+api/npm-debug.log
+api/yarn-error.log
+api/.fleet
+api/.idea
+api/.vscode
