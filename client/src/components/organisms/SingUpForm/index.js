@@ -4,6 +4,7 @@ import Grid from "@mui/material/Grid";
 //
 import Field from "../../atoms/Field";
 import ButtonState from "../../atoms/ButtonState";
+import useAdminApi from "../../../services/apiHooks/useAdminApi";
 
 function SingUpForm() {
   const { control, handleSubmit } = useForm({
@@ -15,7 +16,11 @@ function SingUpForm() {
     },
   });
 
-  function onSubmitSucces(value) {}
+  const api = useAdminApi();
+
+  function onSubmitSucces(value) {
+    api.reqSetAdmin(value);
+  }
 
   return (
     <Grid container item>
@@ -24,7 +29,7 @@ function SingUpForm() {
         rules={{ required: true }}
         control={control}
         render={({ field, fieldState: { error } }) => (
-          <Field label="Name"  required hasError={Boolean(error)} {...field}/>
+          <Field label="Name" required hasError={Boolean(error)} {...field} />
         )}
       />
       <Controller
