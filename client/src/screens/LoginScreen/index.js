@@ -1,14 +1,29 @@
 import React from "react";
+import { Navigate } from "react-router-dom";
 import Container from "@mui/material/Container";
 //
 import LoginTemplate from "../../components/templates/LoginTemplate";
+import useAuthSelector from "../../services/selectors/auth";
+import paths from "../../router/paths";
 
 function LoginScreen() {
-  return (
-    <Container maxWidth="sm">
-      <LoginTemplate />
-    </Container>
-  );
+  const auth = useAuthSelector();
+
+  function _render() {
+    let component = (
+      <Container maxWidth="sm">
+        <LoginTemplate />
+      </Container>
+    );
+
+    if (auth.isLogged) {
+      component = <Navigate to={paths.dashboard} replace />;
+    }
+
+    return component;
+  }
+
+  return _render();
 }
 
 LoginScreen.displayName = "LoginScreen";

@@ -1,7 +1,7 @@
 import { configureStore } from "@reduxjs/toolkit";
 //
-import registerReducer from "./features/register";
-import authReducer from "./features/auth";
+import register from "../features/register";
+import auth from "../features/auth";
 
 const middlewares = [];
 
@@ -13,8 +13,8 @@ if (process.env.NODE_ENV === "development") {
 
 export const store = configureStore({
   reducer: {
-    registerReducer,
-    authReducer,
+    auth,
+    register,
   },
   middleware: middlewares,
 });
