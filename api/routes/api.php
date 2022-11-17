@@ -3,8 +3,6 @@
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\ClientController;
 
-// use Illuminate\Http\Request;
-
 use Illuminate\Support\Facades\Route;
 
 /*

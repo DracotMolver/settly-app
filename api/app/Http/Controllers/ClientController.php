@@ -34,7 +34,7 @@ class ClientController extends Controller
 
         $foundClient = Client::find($client);
 
-        return $this->response()->json([
+        return response()->json([
             'data' => [
                 'name' => $foundClient->toJson()
             ],
