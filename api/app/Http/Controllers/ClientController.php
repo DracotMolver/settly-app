@@ -11,12 +11,23 @@ class ClientController extends Controller
 {
 
     /**
+     * Instantiate a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('auth.token');
+    }
+
+    /**
      * Store a new Client in the database.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request) {
+    public function store(Request $request)
+    {
         $client = new Client;
 
         $client->name = $request->name;
@@ -29,7 +40,7 @@ class ClientController extends Controller
         $adminUser->clients()->save($client);
 
         // Processes the image to save it on the public folder
-        $imageName = time().'.'.$request->picture->extension();
+        $imageName = time() . '.' . $request->picture->extension();
         $request->picture->move(public_path('images'), $imageName);
 
         $foundClient = Client::find($client);
@@ -38,7 +49,7 @@ class ClientController extends Controller
             'data' => [
                 'name' => $foundClient->toJson()
             ],
-            'message'=> 'data saved successfully'
+            'message' => 'data saved successfully'
         ]);
     }
 }

@@ -9,6 +9,7 @@ use Illuminate\Validation\Rules\Password;
 
 use Illuminate\Http\Request;
 
+use App\Models\Access;
 use App\Models\Admin;
 
 class AdminController extends Controller
@@ -44,7 +45,12 @@ class AdminController extends Controller
         if ($adminUser) {
             if (Hash::check($request->password, $adminUser->password)) {
                 // Create token to send to the front
-                $token = $adminUser->createToken($request->password)->plainTextToken;
+                $token = Hash::make(now());
+
+                // Safe the token on the Access model
+                $access = new Access;
+                $access->token = $token;
+                $access->save();
 
                 return response()->json(['token' => $token]);
             }
