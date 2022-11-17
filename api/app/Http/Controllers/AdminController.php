@@ -44,8 +44,9 @@ class AdminController extends Controller
         if ($adminUser) {
             if (Hash::check($request->password, $adminUser->password)) {
                 // Create token to send to the front
-                $token = $request->admin()->createToken($request->password);
-                return response()->json(['token' => $token->plainTextToken]);
+                $token = $adminUser->createToken($request->password)->plainTextToken;
+
+                return response()->json(['token' => $token]);
             }
 
             return  response()->json(['message' => 'Data incorrect'], 403);

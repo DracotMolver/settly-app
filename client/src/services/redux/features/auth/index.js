@@ -24,7 +24,14 @@ export const authSlice = createSlice({
     setAuthSuccess: (state, { payload }) => {
       state.fetching = false;
       state.fetched = true;
-      state.data = payload;
+      state.data.token = payload?.token || "";
+      state.data.isLogged = Boolean(
+        window.sessionStorage.getItem("token") || payload?.token
+      );
+
+      if (!window.sessionStorage.getItem("token") && payload?.token) {
+        window.sessionStorage.setItem("token", payload.token);
+      }
     },
     setAuthFailure: (state, { payload }) => {
       state.fetching = false;

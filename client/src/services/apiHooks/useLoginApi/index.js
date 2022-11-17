@@ -4,7 +4,7 @@ import { useDispatch } from "react-redux";
 import endpoints from "../../endpoints";
 import { actionsAuth } from "../../redux/features/auth";
 
-const { setRegisterInit, setAuthSuccess, setAuthFailure } = actionsAuth;
+const { setAuthInit, setAuthSuccess, setAuthFailure } = actionsAuth;
 
 function useLoginApi() {
   const dispatch = useDispatch();
@@ -13,7 +13,9 @@ function useLoginApi() {
     dispatch(setAuthInit(payload));
 
     try {
-      const response = await axios.post(endpoints.storeAdmin, payload);
+      const response = await axios.get(endpoints.loginAdmin, {
+        params: payload,
+      });
       dispatch(setAuthSuccess(response?.data));
     } catch (error) {
       dispatch(setAuthFailure(error?.response?.data));
