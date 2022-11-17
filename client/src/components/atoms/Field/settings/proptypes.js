@@ -1,6 +1,7 @@
 import PropTypes from "prop-types";
 
 const proptypes = {
+  type: PropTypes.string,
   label: PropTypes.string.isRequired,
   onChange: PropTypes.func.isRequired,
   value: PropTypes.string.isRequired,

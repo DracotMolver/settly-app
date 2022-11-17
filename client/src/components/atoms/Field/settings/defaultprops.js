@@ -1,4 +1,5 @@
 const defaultProps = {
+  type: 'text',
   label: "",
   onChange: () => {},
   value: "",

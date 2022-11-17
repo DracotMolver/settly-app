@@ -4,7 +4,7 @@ import Grid from "@mui/material/Grid";
 //
 import Field from "../../atoms/Field";
 import ButtonState from "../../atoms/ButtonState";
-import useAdminApi from "../../../services/apiHooks/useAdminApi";
+import useRegisterApi from "../../../services/apiHooks/userRegisterApi";
 
 function SingUpForm() {
   const { control, handleSubmit } = useForm({
@@ -12,15 +12,11 @@ function SingUpForm() {
       name: "",
       email: "",
       password: "",
-      passwordConfirmation: "",
+      password_confirmation: "",
     },
   });
 
-  const api = useAdminApi();
-
-  function onSubmitSucces(value) {
-    api.reqSetAdmin(value);
-  }
+  const api = useRegisterApi();
 
   return (
     <Grid container item>
@@ -40,6 +36,7 @@ function SingUpForm() {
           <Field
             label="Email Address"
             required
+            type="email"
             hasError={Boolean(error)}
             {...field}
           />
@@ -53,25 +50,30 @@ function SingUpForm() {
           <Field
             label="Password"
             required
+            type="password"
             hasError={Boolean(error)}
             {...field}
           />
         )}
       />
       <Controller
-        name="passwordConfirmation"
+        name="password_confirmation"
         rules={{ required: true }}
         control={control}
         render={({ field, fieldState: { error } }) => (
           <Field
-            label="Repeat Password"
+            label="Confirm Password"
             required
+            type="password"
             hasError={Boolean(error)}
             {...field}
           />
         )}
       />
-      <ButtonState text="Sign Up" onPress={handleSubmit(onSubmitSucces)} />
+      <ButtonState
+        text="Sign Up"
+        onPress={handleSubmit(api.reqRegisterAdmin)}
+      />
     </Grid>
   );
 }

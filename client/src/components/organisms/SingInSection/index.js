@@ -4,6 +4,7 @@ import Grid from "@mui/material/Grid";
 //
 import Field from "../../atoms/Field";
 import ButtonState from "../../atoms/ButtonState";
+import useLoginApi from "../../../services/apiHooks/useLoginApi";
 
 function SingInSection() {
   const { control, handleSubmit } = useForm({
@@ -13,7 +14,7 @@ function SingInSection() {
     },
   });
 
-  function onSubmitSucces(value) {}
+  const api = useLoginApi();
 
   return (
     <Grid container item>
@@ -38,12 +39,13 @@ function SingInSection() {
           <Field
             label="Password"
             required
+            type="password"
             hasError={Boolean(error)}
             {...field}
           />
         )}
       />
-      <ButtonState text="Sign In" onPress={handleSubmit(onSubmitSucces)} />
+      <ButtonState text="Sign In" onPress={handleSubmit(api.reqLoginAdmin)} />
     </Grid>
   );
 }

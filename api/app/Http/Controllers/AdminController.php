@@ -21,8 +21,37 @@ class AdminController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function index() {
+    public function index(Request $request)
+    {
+        $validated = Validator::make($request->all(), [
+            'email' => 'required|email',
+            'password' => [
+                'required',
+                Password::min(6)
+                    ->letters()
+                    ->numbers()
+            ]
+        ]);
 
+
+        if ($validated->fails()) {
+            return response($validated->errors()->jsonSerialize(), 422);
+        }
+
+        // find the admin user on the database
+        $adminUser = Admin::where('email', $request->email)->first();
+
+        if ($adminUser) {
+            if (Hash::check($request->password, $adminUser->password)) {
+                // Create token to send to the front
+                $token = $request->admin()->createToken($request->password);
+                return response()->json(['token' => $token->plainTextToken]);
+            }
+
+            return  response()->json(['message' => 'Data incorrect'], 403);
+        }
+
+        return  response()->json(['message' => 'User not found'], 422);
     }
 
     /**
@@ -41,15 +70,14 @@ class AdminController extends Controller
             'password' => [
                 'required',
                 'confirmed',
-                Password::min(8)
+                Password::min(6)
                     ->letters()
                     ->numbers()
-                    ->symbols()
             ]
         ]);
 
         if ($validated->fails()) {
-            return response($validated->errors()->jsonSerialize(), 403);
+            return response($validated->errors()->jsonSerialize(), 422);
         }
 
         $adminUser->name = $request->name;
@@ -58,9 +86,8 @@ class AdminController extends Controller
 
         $saved = $adminUser->save();
 
-
         $msg = $saved ? 'succes' : 'fail';
-        $status = $saved ? 200 : 403;
+        $status = $saved ? 200 : 422;
 
         return response()->json(['message' => $msg], $status);
     }
