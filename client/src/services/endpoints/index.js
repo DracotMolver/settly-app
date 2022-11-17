@@ -1,6 +1,6 @@
 const endpoints = {
-  storeAdmin: "http://localhost:8000/api/admin",
-  loginAdmin: "http://localhost:8000/api/admin",
+  registerAdmin: "http://localhost:8000/api/register",
+  loginAdmin: "http://localhost:8000/api/login",
 };
 
 export default endpoints;

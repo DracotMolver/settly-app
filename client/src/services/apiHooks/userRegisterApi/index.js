@@ -13,7 +13,7 @@ function useRegisterApi() {
     dispatch(setRegisterInit(payload));
 
     try {
-      const response = await axios.post(endpoints.storeAdmin, payload);
+      const response = await axios.post(endpoints.registerAdmin, payload);
       dispatch(setRegisterSuccess(response?.data));
     } catch (error) {
       dispatch(setRegisterFailure(error?.response?.data));

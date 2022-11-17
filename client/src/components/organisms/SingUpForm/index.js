@@ -1,22 +1,24 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useForm, Controller } from "react-hook-form";
 import Grid from "@mui/material/Grid";
 //
 import Field from "../../atoms/Field";
 import ButtonState from "../../atoms/ButtonState";
 import useRegisterApi from "../../../services/apiHooks/userRegisterApi";
+import useRegisterSelector from "../../../services/selectors/register";
 
 function SingUpForm() {
-  const { control, handleSubmit } = useForm({
-    defaultValues: {
-      name: "",
-      email: "",
-      password: "",
-      password_confirmation: "",
-    },
-  });
+  const { control, handleSubmit, reset } = useForm();
 
+  const { isRegistered } = useRegisterSelector();
   const api = useRegisterApi();
+
+  // Reset the form and the state
+  useEffect(() => {
+    if (isRegistered) {
+      reset();
+    }
+  }, [isRegistered]);
 
   return (
     <Grid container item>
@@ -27,6 +29,7 @@ function SingUpForm() {
         render={({ field, fieldState: { error } }) => (
           <Field label="Name" required hasError={Boolean(error)} {...field} />
         )}
+        defaultValues=""
       />
       <Controller
         name="email"
@@ -41,6 +44,7 @@ function SingUpForm() {
             {...field}
           />
         )}
+        defaultValues=""
       />
       <Controller
         name="password"
@@ -55,6 +59,7 @@ function SingUpForm() {
             {...field}
           />
         )}
+        defaultValues=""
       />
       <Controller
         name="password_confirmation"
@@ -69,6 +74,7 @@ function SingUpForm() {
             {...field}
           />
         )}
+        defaultValues=""
       />
       <ButtonState
         text="Sign Up"

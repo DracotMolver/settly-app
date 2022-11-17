@@ -11,7 +11,7 @@ function LoginScreen() {
 
   function _render() {
     let component = (
-      <Container maxWidth="sm">
+      <Container maxWidth="sm" pb={3}>
         <LoginTemplate />
       </Container>
     );
