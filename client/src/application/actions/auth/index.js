@@ -1,5 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import initialState from "../../../domain/ui/auth";
+import { SET_UI_LOGOUT } from "../logout";
 
 const authSlice = createSlice({
   name: "auth",
@@ -11,7 +12,7 @@ const authSlice = createSlice({
       state.data.token = "";
       state.data.isLogged = false;
       state.error = false;
-      state.user = {};
+      state.data.user = {};
     },
     setAuthSuccess: (state, { payload }) => {
       state.fetching = false;
@@ -19,7 +20,7 @@ const authSlice = createSlice({
       state.data.token = payload?.token || "";
       state.data.isLogged = true;
       state.error = false;
-      state.user = payload?.admin;
+      state.data.user = JSON.parse(payload?.admin);
 
       if (!window.sessionStorage.getItem("token") && payload?.token) {
         window.sessionStorage.setItem("token", payload.token);
@@ -30,8 +31,11 @@ const authSlice = createSlice({
       state.fetched = true;
       state.data.token = "";
       state.data.isLogged = false;
-      state.user = {};
+      state.data.user = {};
       state.error = true;
+    },
+    [SET_UI_LOGOUT]: () => {
+      return initialState;
     },
   },
 });

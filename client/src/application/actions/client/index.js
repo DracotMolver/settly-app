@@ -1,5 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import initialState from "../../../domain/entities/client";
+import { SET_UI_LOGOUT } from "../logout";
 
 function _fetching(state) {
   state.fetching = true;
@@ -50,6 +51,9 @@ const clientSlice = createSlice({
       state.data = state.data.filter((client) => client.id !== payload);
     },
     removeClientFailure: _error,
+    [SET_UI_LOGOUT]: () => {
+      return initialState;
+    },
   },
 });
 
