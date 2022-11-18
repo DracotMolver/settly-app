@@ -34,6 +34,18 @@ const authSlice = createSlice({
       state.data.user = {};
       state.error = true;
     },
+    getAuthUserInit: (state) => {
+      state.fetching = true;
+      state.fetched = false;
+      state.error = false;
+      state.data.user = {};
+    },
+    getAuthUserSuccess: (state, { payload }) => {
+      state.fetching = false;
+      state.fetched = true;
+      state.error = false;
+      state.data.user = payload;
+    },
     [SET_UI_LOGOUT]: () => {
       const state = { ...initialState };
       state.token = "";

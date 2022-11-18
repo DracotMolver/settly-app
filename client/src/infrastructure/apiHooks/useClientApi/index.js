@@ -16,6 +16,8 @@ const {
   removeClientInit,
   removeClientSuccess,
   removeClientFailure,
+  editClientSuccess,
+  editClientFailure,
 } = clientActions;
 
 const { setAlertInit, setAlertSuccess, setAlertFailure } = alertActions;
@@ -96,17 +98,20 @@ function useClientApi() {
     dispatch(setAlertInit());
 
     try {
-      const response = await axios.put(endpoints.editClient(payload), {
+      const { id, ...params } = payload;
+      const response = await axios.post(endpoints.editClient(id), params, {
         headers: {
+          "Content-Type": "multipart/form-data",
           Authorization: `Bearer ${TOKEN}`,
         },
       });
 
-      // dispatch(editClientSuccess(response.data));
+      console.log(response);
+      dispatch(editClientSuccess(response.data));
       dispatch(setAlertSuccess(["Client updated Successfully!"]));
     } catch (error) {
       dispatch(setAlertFailure(error.response.data));
-      // dispatch(removeClientFailure());
+      dispatch(editClientFailure());
     }
   }, []);
 

@@ -9,7 +9,7 @@ import paths from "../../../ui/router/paths";
 import endpoints from "../../endpoints";
 
 const { setAuthInit, setAuthSuccess, setAuthFailure } = authActions;
-const { setAlertInit, setAlertSuccess, setAlertFailure } = alertActions;
+const { setAlertInit, setAlertFailure } = alertActions;
 
 function useLoginApi() {
   const dispatch = useDispatch();

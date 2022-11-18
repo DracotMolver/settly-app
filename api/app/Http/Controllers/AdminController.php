@@ -2,18 +2,38 @@
 
 namespace App\Http\Controllers;
 
-// use Illuminate\Support\Facades\Hash;
-// use Illuminate\Support\Facades\Validator;
+use Illuminate\Http\Request;
 
-// use Illuminate\Http\Request;
-
-// use App\Http\Requests\RegisterPostRequest;
-
-// use App\Models\Access;
-// use App\Models\Admin;
+use App\Models\Access;
 
 class AdminController extends Controller
 {
+  protected $access;
 
-    
+  /**
+   * Instantiate a new controller instance.
+   *
+   * @return void
+   */
+  public function __construct(Access $access)
+  {
+    $this->access = $access;
+
+    $this->middleware('auth.token');
+  }
+
+  /**
+   * retrieves all the clientes by admin that has the access
+   *
+   * @param  \Illuminate\Http\Request  $request
+   * @return \Illuminate\Http\Response
+   */
+  public function index(Request $request)
+  {
+    $adminUser = $this->access->findByToken($request->bearerToken())
+      ->admin()
+      ->first();
+
+    return response()->json($adminUser, 200);
+  }
 }

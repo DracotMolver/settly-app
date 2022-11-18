@@ -3,9 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ClientPostRequest;
+use App\Http\Requests\ClientPutRequest;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
 use App\Models\Access;
@@ -76,7 +76,7 @@ class ClientController extends Controller
         if ($this->clientDoesNotExist($validatedData['email'])) {
             $this->client->name = $validatedData['name'];
             $this->client->email = $validatedData['email'];
-            $this->client->picture = $this->saveImage($request->file('picture'));
+            $this->client->picture = $this->saveImg($request);
 
             $adminUser = $this->getAdminUser($request);
 
@@ -99,19 +99,22 @@ class ClientController extends Controller
     /**
      * Update a client on the database.
      *
-     * @param  App\Http\Requests\ClientPostRequest  $request
+     * @param  App\Http\Requests\ClientPutRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function udpate(ClientPostRequest $request)
+    public function update(ClientPutRequest $request, $id)
     {
         $validatedData = $request->validated();
 
-        $client = $this->client->find($request->client);
+        $client = $this->client->find(intval($id));
 
         $client->name = Str::lower($validatedData['name']);
         $client->email = Str::lower($validatedData['email']);
+        $client->picture = $this->saveImg($request);
 
         $saved = $client->save();
+
+        $client->refresh();
 
         $content = $saved ? $client : [];
         $reqStatus = $saved ? 200 : 422;
@@ -119,18 +122,23 @@ class ClientController extends Controller
         return response()->json($content, $reqStatus);
     }
 
-    protected function saveImage($image)
-    {
-        $image->store('public');
-        return Storage::url($image->hashName);
-    }
-
-
+    /**
+     * Get the client. if the model doesn't exist it will return true
+     *
+     * @param  App\Http\Requests\ClientPutRequest  $request
+     * @return App\Models\Admin;
+     */
     protected function clientDoesNotExist($email)
     {
         return !$this->client->findByEmail(Str::lower($email));
     }
 
+    /**
+     * Get the logged admin from the token access
+     *
+     * @param  App\Http\Requests\ClientPutRequest  $request
+     * @return App\Models\Admin;
+     */
     protected function getAdminUser($request)
     {
         $adminUser = $this->access->findByToken($request->bearerToken())
@@ -138,5 +146,23 @@ class ClientController extends Controller
             ->first();
 
         return $adminUser;
+    }
+
+    /**
+     * Save the miage only if it is available.
+     * return null or the image path
+     *
+     * @param  App\Http\Requests\ClientPutRequest  $request
+     * @return string
+     */
+    protected function saveImg($request)
+    {
+        $img = $request->file('picture');
+
+        if ($img) {
+            $img = $img->store('public');
+        }
+
+        return $img;
     }
 }

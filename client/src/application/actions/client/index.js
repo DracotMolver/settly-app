@@ -56,6 +56,20 @@ const clientSlice = createSlice({
     editClientSetId: (state, { payload }) => {
       state.clientId = payload;
     },
+    editClientSuccess: (state, { payload }) => {
+      _fetched(state);
+
+      state.data = state.data.map((client) => {
+        let _client = client;
+
+        if (client.id === payload.id) {
+          _client = payload;
+        }
+
+        return _client;
+      });
+    },
+    editClientFailure:_error,
     [SET_UI_LOGOUT]: () => {
       return initialState;
     },

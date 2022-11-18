@@ -10,7 +10,7 @@ class Admin extends Model
 {
     use HasFactory;
 
-    protected $hidden = ['password'];
+    protected $hidden = ['password', 'created_at', 'deleted_at', 'updated_at'];
 
     /**
      * Get all the clients by admin

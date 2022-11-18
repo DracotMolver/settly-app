@@ -6,9 +6,8 @@ use Illuminate\Foundation\Http\FormRequest;
 
 use App\Models\Access;
 
-class ClientPostRequest extends FormRequest
+class ClientPutRequest extends FormRequest
 {
-
     protected $access;
 
     function __construct(Access $access)
@@ -36,8 +35,8 @@ class ClientPostRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required|alpha|min:3',
-            'email' => 'required|email',
+            'name' => 'alpha|min:3',
+            'email' => 'email',
             'picture' => 'nullable|image'
         ];
     }

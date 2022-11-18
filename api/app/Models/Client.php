@@ -12,6 +12,8 @@ class Client extends Model
     use HasFactory;
     use SoftDeletes;
 
+    protected $hidden = ['password', 'created_at', 'deleted_at', 'updated_at', 'admin_id'];
+
     /**
      * Get the admin of one client.
      */

@@ -1,4 +1,4 @@
-import React, { forwardRef, useCallback, useState } from "react";
+import React, { forwardRef, useCallback, useEffect, useState } from "react";
 import Button from "@mui/material/Button";
 import Grid from "@mui/material/Grid";
 import Avatar from "@mui/material/Avatar";
@@ -6,9 +6,10 @@ import UploadFileIcon from "@mui/icons-material/UploadFile";
 //
 import defaultprops from "./settings/defaultprops";
 import proptypes from "./settings/proptypes";
+import { remoteAssets } from "../../../../infrastructure/endpoints";
 
-const UploadInput = forwardRef(({ text, setValue, name }, ref) => {
-  const [resultImage, setResultImage] = useState(null);
+const UploadInput = forwardRef(({ text, setValue, name, imgSrc }, ref) => {
+  const [resultImage, setResultImage] = useState(imgSrc);
 
   const onClickFileUploadHandle = useCallback((event) => {
     if (event.target.files) {
@@ -28,6 +29,12 @@ const UploadInput = forwardRef(({ text, setValue, name }, ref) => {
       setValue(name, file);
     }
   }, []);
+
+  useEffect(() => {
+    if (imgSrc) {
+      setResultImage(remoteAssets.img(imgSrc));
+    }
+  }, [imgSrc]);
 
   return (
     <Grid item mt={3} mb={3} xs={12}>

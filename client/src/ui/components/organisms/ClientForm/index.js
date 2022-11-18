@@ -6,7 +6,7 @@ import useClientApi from "../../../../infrastructure/apiHooks/useClientApi";
 import Field from "../../atoms/Field";
 import ButtonState from "../../atoms/ButtonState";
 import UploadInput from "../../atoms/UploadInput";
-import defaultprops from "./settings/defaultprops";
+import defaultprops, { ON_CREATE } from "./settings/defaultprops";
 import proptypes from "./settings/proptypes";
 import useClientSelector from "../../../../application/selectors/client";
 
@@ -17,7 +17,7 @@ function ClientForm({ onCloseModal, actionOn }) {
   const api = useClientApi();
 
   function _onSubmitSuccessHandle(value) {
-    actionOn
+    actionOn === ON_CREATE
       ? api.reqAddClient(value)
       : api.reqEditClient({ ...client, ...value });
     onCloseModal();
@@ -51,17 +51,17 @@ function ClientForm({ onCloseModal, actionOn }) {
       <Controller
         name="picture"
         control={control}
-        render={({ field, fieldState: { error } }) => (
+        render={({ field }) => (
           <UploadInput
             text="Upload Your Picture"
             setValue={setValue}
+            imgSrc={client?.picture || ""}
             {...field}
           />
         )}
-        defaultValue=""
       />
       <ButtonState
-        text="Add New Client"
+        text={actionOn === ON_CREATE ? "Add new client" : "Edit client"}
         onClick={handleSubmit(_onSubmitSuccessHandle)}
       />
     </Grid>
