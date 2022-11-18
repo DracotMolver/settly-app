@@ -1,4 +1,4 @@
-import React, { forwardRef, useState } from "react";
+import React, { forwardRef, useCallback, useState } from "react";
 import Button from "@mui/material/Button";
 import Grid from "@mui/material/Grid";
 import Avatar from "@mui/material/Avatar";
@@ -10,7 +10,7 @@ import proptypes from "./settings/proptypes";
 const UploadInput = forwardRef(({ text, setValue, name }, ref) => {
   const [resultImage, setResultImage] = useState(null);
 
-  function onPressFileUploadHandle(event) {
+  const onPressFileUploadHandle = useCallback((event) => {
     if (event.target.files) {
       const file = event.target.files[0];
       const reader = new FileReader();
@@ -27,7 +27,7 @@ const UploadInput = forwardRef(({ text, setValue, name }, ref) => {
 
       setValue(name, file);
     }
-  }
+  }, []);
 
   return (
     <Grid item mt={3} mb={3} xs={12}>

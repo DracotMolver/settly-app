@@ -18,7 +18,7 @@ function ListDetail() {
     <Card>
       <List>
         {clients.map((client) => (
-          <ListItem secondaryAction={<PopupMenu />}>
+          <ListItem secondaryAction={<PopupMenu />} key={client.email}>
             <ListItemText primary={client.name} secondary={client.email} />
           </ListItem>
         ))}

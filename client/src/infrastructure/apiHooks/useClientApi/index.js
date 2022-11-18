@@ -1,4 +1,5 @@
 import axios from "axios";
+import { useCallback } from "react";
 import { useDispatch } from "react-redux";
 import { redirect } from "react-router-dom";
 //
@@ -19,7 +20,7 @@ function useClientApi() {
 
   const dispatch = useDispatch();
 
-  async function _reqAddClient(payload) {
+  const _reqAddClient = useCallback(async (payload) => {
     dispatch(setClientInit());
 
     try {
@@ -33,9 +34,9 @@ function useClientApi() {
     } catch (error) {
       dispatch(addClientFailure(error?.response?.data));
     }
-  }
+  }, []);
 
-  function _reqGetClients() {
+  const _reqGetClients = useCallback(() => {
     let isMounted = true;
 
     async function mainReqGetClients() {
@@ -61,7 +62,7 @@ function useClientApi() {
     return () => {
       isMounted = false;
     };
-  }
+  }, []);
 
   const actions = {
     reqAddClient: _reqAddClient,

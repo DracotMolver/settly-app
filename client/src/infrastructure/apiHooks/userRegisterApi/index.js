@@ -1,15 +1,17 @@
 import axios from "axios";
+import { useCallback } from "react";
 import { useDispatch } from "react-redux";
 //
 import { actionsRegister } from "../../../application/actions/register";
 import endpoints from "../../endpoints";
 
-const { setRegisterInit, setRegisterSuccess, setRegisterFailure } = actionsRegister;
+const { setRegisterInit, setRegisterSuccess, setRegisterFailure } =
+  actionsRegister;
 
 function useRegisterApi() {
   const dispatch = useDispatch();
 
-  async function _reqRegisterAdmin(payload) {
+  const _reqRegisterAdmin = useCallback(async (payload) => {
     dispatch(setRegisterInit());
 
     try {
@@ -18,7 +20,7 @@ function useRegisterApi() {
     } catch (error) {
       dispatch(setRegisterFailure(error?.response?.data));
     }
-  }
+  }, []);
 
   const actions = {
     reqRegisterAdmin: _reqRegisterAdmin,

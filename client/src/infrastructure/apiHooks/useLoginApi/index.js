@@ -1,4 +1,5 @@
 import axios from "axios";
+import { useCallback } from "react";
 import { useDispatch } from "react-redux";
 import { redirect } from "react-router-dom";
 //
@@ -11,7 +12,7 @@ const { setAuthInit, setAuthSuccess, setAuthFailure } = actionsAuth;
 function useLoginApi() {
   const dispatch = useDispatch();
 
-  async function _reqLoginAdmin(payload) {
+  const _reqLoginAdmin = useCallback(async (payload) => {
     dispatch(setAuthInit());
 
     try {
@@ -21,7 +22,7 @@ function useLoginApi() {
     } catch (error) {
       dispatch(setAuthFailure(error?.response?.data));
     }
-  }
+  }, []);
 
   const actions = {
     reqLoginAdmin: _reqLoginAdmin,

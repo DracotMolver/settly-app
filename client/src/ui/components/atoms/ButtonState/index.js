@@ -1,30 +1,26 @@
 import React from "react";
 import Button from "@mui/material/Button";
 import Grid from "@mui/material/Grid";
-// 
+//
 import defaultProps from "./settings/defaultprops";
 import proptypes from "./settings/proptypes";
+import { getRestOfStates } from "./helper";
 
-function ButtonState({ isPrimary, isSuccess, disabled, hasError, text ,onPress}) {
-  function _getRestOfStates() {
-    const otherStates = {};
-
-    if (hasError) {
-      otherStates.color = "error";
-    } else if (isSuccess) {
-      otherStates.color = "success";
-    }
-
-    return otherStates;
-  }
-
+function ButtonState({
+  isPrimary,
+  isSuccess,
+  disabled,
+  hasError,
+  text,
+  onPress,
+}) {
   return (
     <Grid item mt={3} mb={3}>
       <Button
         variant={isPrimary ? "contained" : "outlined"}
         disabled={disabled}
         onClick={onPress}
-        {..._getRestOfStates()}
+        {...getRestOfStates(hasError, isSuccess)}
       >
         {text}
       </Button>
