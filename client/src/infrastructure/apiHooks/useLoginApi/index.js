@@ -17,7 +17,7 @@ function useLoginApi() {
 
     try {
       const response = await axios.post(endpoints.loginAdmin, payload);
-      dispatch(setAuthSuccess(response?.data));
+      dispatch(setAuthSuccess(response.data));
       return redirect(paths.dashboard);
     } catch (_) {
       dispatch(setAuthFailure());

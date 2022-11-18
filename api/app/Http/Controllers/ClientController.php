@@ -28,15 +28,6 @@ class ClientController extends Controller
         $this->middleware('auth.token');
     }
 
-    protected function getAdminUser($request)
-    {
-        $adminUser = $this->access->findByToken($request->bearerToken())
-            ->admin()
-            ->first();
-
-        return $adminUser;
-    }
-
     /**
      * retrieves all the clientes by admin
      *
@@ -76,20 +67,45 @@ class ClientController extends Controller
     {
         $validatedData = $request->validated();
 
-        $this->client->name = $validatedData['name'];
-        $this->client->email = $validatedData['email'];
+        $content = [];
+        $reqStatus = 422;
 
+        // send an error if the client already exist for this admin user
+        if ($this->clientDoesNotExist($validatedData['email'])) {
+            $this->client->name = $validatedData['name'];
+            $this->client->email = $validatedData['email'];
 
-        $adminUser = $this->getAdminUser($request);
+            $adminUser = $this->getAdminUser($request);
 
-        $adminUser->clients()->save(
-            $this->client
-        );
+            $adminUser->clients()->save(
+                $this->client
+            );
 
-        $adminUser->refresh();
+            $adminUser->refresh();
 
-        $request->file('picture')->store('public');
+            $request->file('picture')->store('public');
 
-        return response()->json($adminUser->clients, 200);
+            $content = $adminUser->clients;
+            $reqStatus = 200;
+        } else {
+            $content = ["message" => "Client already assigned to you"];
+            $reqStatus = 405;
+        }
+
+        return response()->json($content, $reqStatus);
+    }
+
+    protected function clientDoesNotExist($email)
+    {
+        return !$this->client->findByEmail($email);
+    }
+
+    protected function getAdminUser($request)
+    {
+        $adminUser = $this->access->findByToken($request->bearerToken())
+            ->admin()
+            ->first();
+
+        return $adminUser;
     }
 }

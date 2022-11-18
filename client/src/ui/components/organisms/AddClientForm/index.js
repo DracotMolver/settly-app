@@ -14,8 +14,8 @@ function AddClientForm({ onCloseModal }) {
 
   const api = useClientApi();
 
-  function _onSubmitSuccessHandle() {
-    api.reqAddClient();
+  function _onSubmitSuccessHandle(value) {
+    api.reqAddClient(value);
     onCloseModal();
   }
 

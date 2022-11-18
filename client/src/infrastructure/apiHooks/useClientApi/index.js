@@ -36,10 +36,10 @@ function useClientApi() {
           Authorization: `Bearer ${TOKEN}`,
         },
       });
-      dispatch(setClientSuccess(response?.data));
-      dispatch(setAlertSuccess('Added Client Successfully!'));
+      dispatch(setClientSuccess(response.data));
+      dispatch(setAlertSuccess(["Client added Successfully!"]));
     } catch (error) {
-      dispatch(setAlertFailure(error?.response?.data?.errors));
+      dispatch(setAlertFailure(error.response.data.errors));
       dispatch(setClientFailure());
     }
   }, []);
@@ -58,7 +58,7 @@ function useClientApi() {
             },
           });
 
-          dispatch(getClientSuccess(response?.data));
+          dispatch(getClientSuccess(response.data));
         }
       } catch (err) {
         dispatch(getClientFailure());
@@ -73,6 +73,7 @@ function useClientApi() {
   }, []);
 
   const _reqRemoveClient = useCallback(async (payload) => {
+    dispatch(setClientInit());
     dispatch(removeClientInit());
 
     try {
@@ -82,8 +83,10 @@ function useClientApi() {
         },
       });
 
-      dispatch(removeClientSuccess(response?.data));
-    } catch (_) {
+      dispatch(removeClientSuccess(response.data));
+      dispatch(setAlertSuccess(["Client removed Successfully!"]));
+    } catch (error) {
+      dispatch(setAlertFailure(error.response.data.errors));
       dispatch(removeClientFailure());
     }
   }, []);

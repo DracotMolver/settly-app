@@ -19,4 +19,9 @@ class Client extends Model
     {
         return $this->belongsTo(Admin::class);
     }
+
+    public function findByEmail($email)
+    {
+        $this->where('email', $email)->first();
+    }
 }

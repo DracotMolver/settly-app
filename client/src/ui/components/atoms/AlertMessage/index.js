@@ -29,7 +29,9 @@ function AlertMessage() {
         severity={error ? "error" : "success"}
         sx={{ width: "100%" }}
       >
-        {Object.values(message).map((errors) => errors.join("\n"))}
+        {Object.values(message)
+          .flat()
+          .map((errorMessage) => errorMessage)}
       </Alert>
     </Snackbar>
   );

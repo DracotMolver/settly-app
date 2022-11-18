@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('clients', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('email', 320)->unique();
+            $table->string('email', 320);
             $table->timestamps();
             $table->softDeletes();
             $table->foreignId('admin_id')
