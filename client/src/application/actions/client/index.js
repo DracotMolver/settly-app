@@ -5,18 +5,18 @@ const clientSlice = createSlice({
   name: "client",
   initialState: initialState,
   reducers: {
-    setRegisterInit: (state) => {
+    setAddClientInit: (state) => {
       state.fetching = true;
       state.fetched = false;
       state.data = null;
       state.error = false;
     },
-    setRegisterSuccess: (state, { payload }) => {
+    setAddClientSuccess: (state, { payload }) => {
       state.fetching = false;
       state.fetched = true;
       state.data = payload;
     },
-    setRegisterFailure: (state, { payload }) => {
+    setAddClientFailure: (state, { payload }) => {
       state.fetching = false;
       state.fetched = true;
       state.error = payload;
@@ -26,6 +26,6 @@ const clientSlice = createSlice({
 
 const { actions, reducer: client } = clientSlice;
 
-export const actionsRegister = actions;
+export const actionsClient = actions;
 
 export default client;

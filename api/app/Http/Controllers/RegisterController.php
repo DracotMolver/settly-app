@@ -35,8 +35,8 @@ class RegisterController extends Controller
         $saved = $this->adminUser->save();
 
         $msg = $saved ? 'succes' : 'fail';
-        $status = $saved ? 200 : 422;
+        $reStatus = $saved ? 200 : 422;
 
-        return response()->json(['message' => $msg], $status);
+        return response()->json(['message' => $msg], $reStatus);
     }
 }

@@ -10,7 +10,7 @@ function useRegisterApi() {
   const dispatch = useDispatch();
 
   async function _reqRegisterAdmin(payload) {
-    dispatch(setRegisterInit(payload));
+    dispatch(setRegisterInit());
 
     try {
       const response = await axios.post(endpoints.registerAdmin, payload);

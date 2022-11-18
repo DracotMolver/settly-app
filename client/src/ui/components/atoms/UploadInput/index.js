@@ -7,27 +7,26 @@ import UploadFileIcon from "@mui/icons-material/UploadFile";
 import defaultprops from "./settings/defaultprops";
 import proptypes from "./settings/proptypes";
 
-const UploadInput = forwardRef(({ text }, ref) => {
+const UploadInput = forwardRef(({ text, setValue, name }, ref) => {
   const [resultImage, setResultImage] = useState(null);
 
   function onPressFileUploadHandle(event) {
-    if (!event.target.files) {
-      return;
+    if (event.target.files) {
+      const file = event.target.files[0];
+      const reader = new FileReader();
+
+      reader.onload = (evt) => {
+        if (evt?.target?.result) {
+          const { result } = evt.target;
+
+          setResultImage(result?.toString());
+        }
+      };
+
+      reader.readAsDataURL(file);
+
+      setValue(name, file);
     }
-
-    const file = event.target.files[0];
-    const reader = new FileReader();
-
-    reader.onload = (evt) => {
-      if (!evt?.target?.result) {
-        return;
-      }
-      const { result } = evt.target;
-
-      setResultImage(result);
-    };
-
-    reader.readAsDataURL(file);
   }
 
   return (

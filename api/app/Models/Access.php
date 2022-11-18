@@ -18,4 +18,9 @@ class Access extends Model
     {
         return $this->belongsTo(Admin::class);
     }
+
+    public function findByToken($token)
+    {
+        return $this->where('token', $token)->first();
+    }
 }

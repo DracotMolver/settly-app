@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Crypt;
 
 use App\Http\Requests\LoginPostRequest;
 use App\Models\Access;
@@ -34,25 +34,36 @@ class LoginController extends Controller
 
         $foundAmdinUser = $this->adminUser->existWithEmail($validatedData['email']);
 
+        $dataContent = [];
+        $reStatus = 422;
+
         if ($foundAmdinUser) {
             if ($this->isValidPassWord($validatedData['password'], $foundAmdinUser->password)) {
                 // Create token to send to the front
-                $token = Hash::make(now());
+                $token = Crypt::encryptString(
+                    [
+                        'expDate' => now()->addDay(),
+                        'email' => $foundAmdinUser->email
+                    ]
+                );
 
                 // Safe the token on the Access model
                 $saved = $foundAmdinUser->access()->save(new Access([
                     'token' => $token
                 ]));
 
-                $msg = $saved ? $token : null;
-                $status = $saved ? 200 : 422;
-
-                return response()->json(['token' => $msg], $status);
+                $dataContent = $saved ? ['token' => $token] : [];
+                $reStatus = $saved ? 200 : 422;
+            } else {
+                // Error Messsage
+                $dataContent = ['message' => 'Data incorrect'];
             }
-
-            return  response()->json(['message' => 'Data incorrect'], 403);
+        } else {
+            // Error Messsage
+            $dataContent = ['message' => 'User not found'];
         }
 
-        return  response()->json(['message' => 'User not found'], 422);
+
+        return  response()->json($dataContent, $reStatus);
     }
 }

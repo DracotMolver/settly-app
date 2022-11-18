@@ -12,7 +12,7 @@ function useLoginApi() {
   const dispatch = useDispatch();
 
   async function _reqLoginAdmin(payload) {
-    dispatch(setAuthInit(payload));
+    dispatch(setAuthInit());
 
     try {
       const response = await axios.post(endpoints.loginAdmin, payload);
