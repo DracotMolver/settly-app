@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
 
 class Admin extends Model
 {
@@ -29,6 +30,6 @@ class Admin extends Model
 
     public function findByEmail($email)
     {
-        return $this->where('email', $email)->first();
+        return $this->where('email', Str::lower($email))->first();
     }
 }

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
 
 use App\Http\Requests\RegisterPostRequest;
 use App\Models\Admin;
@@ -28,8 +29,8 @@ class RegisterController extends Controller
     {
         $validatedData = $request->validated();
 
-        $this->adminUser->name = $validatedData['name'];
-        $this->adminUser->email = $validatedData['email'];
+        $this->adminUser->name = Str::lower($validatedData['name']);
+        $this->adminUser->email = Str::lower($validatedData['email']);
         $this->adminUser->password = Hash::make($validatedData['password']);
 
         $saved = $this->adminUser->save();

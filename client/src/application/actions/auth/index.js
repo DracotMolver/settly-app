@@ -35,7 +35,11 @@ const authSlice = createSlice({
       state.error = true;
     },
     [SET_UI_LOGOUT]: () => {
-      return initialState;
+      const state = { ...initialState };
+      state.token = "";
+      state.isLogged = false;
+
+      return state;
     },
   },
 });

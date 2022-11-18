@@ -23,7 +23,7 @@ function useRegisterApi() {
       dispatch(setRegisterSuccess(response.data));
       dispatch(setAlertSuccess(["You have created an account successfully"]));
     } catch (error) {
-      dispatch(setAlertFailure(error.response.data.errors));
+      dispatch(setAlertFailure(error.response.data));
       dispatch(setRegisterFailure());
     }
   }, []);

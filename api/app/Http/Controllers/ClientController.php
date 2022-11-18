@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\ClientPostRequest;
 
-use \Illuminate\Http\Request;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 
 use App\Models\Access;
 use App\Models\Client;
@@ -74,6 +76,7 @@ class ClientController extends Controller
         if ($this->clientDoesNotExist($validatedData['email'])) {
             $this->client->name = $validatedData['name'];
             $this->client->email = $validatedData['email'];
+            $this->client->picture = $this->saveImage($request->file('picture'));
 
             $adminUser = $this->getAdminUser($request);
 
@@ -82,8 +85,6 @@ class ClientController extends Controller
             );
 
             $adminUser->refresh();
-
-            $request->file('picture')->store('public');
 
             $content = $adminUser->clients;
             $reqStatus = 200;
@@ -103,17 +104,31 @@ class ClientController extends Controller
      */
     public function udpate(ClientPostRequest $request)
     {
+        $validatedData = $request->validated();
+
         $client = $this->client->find($request->client);
 
+        $client->name = Str::lower($validatedData['name']);
+        $client->email = Str::lower($validatedData['email']);
 
-        $this->client->name = $validatedData['name'];
-        $this->client->email = $validatedData['email'];
+        $saved = $client->save();
+
+        $content = $saved ? $client : [];
+        $reqStatus = $saved ? 200 : 422;
+
+        return response()->json($content, $reqStatus);
+    }
+
+    protected function saveImage($image)
+    {
+        $image->store('public');
+        return Storage::url($image->hashName);
     }
 
 
     protected function clientDoesNotExist($email)
     {
-        return !$this->client->findByEmail($email);
+        return !$this->client->findByEmail(Str::lower($email));
     }
 
     protected function getAdminUser($request)

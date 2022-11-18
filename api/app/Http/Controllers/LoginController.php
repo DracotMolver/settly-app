@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Collection;
 
 use App\Http\Requests\LoginPostRequest;
 use App\Models\Access;
@@ -28,6 +27,7 @@ class LoginController extends Controller
     public function store(LoginPostRequest $request)
     {
         $validatedData = $request->validated();
+
 
         $foundAmdinUser = $this->adminUser->findByEmail($validatedData['email']);
 

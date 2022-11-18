@@ -53,6 +53,9 @@ const clientSlice = createSlice({
       );
     },
     removeClientFailure: _error,
+    editClientSetId: (state, { payload }) => {
+      state.clientId = payload;
+    },
     [SET_UI_LOGOUT]: () => {
       return initialState;
     },

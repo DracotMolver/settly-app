@@ -39,7 +39,7 @@ function useClientApi() {
       dispatch(setClientSuccess(response.data));
       dispatch(setAlertSuccess(["Client added Successfully!"]));
     } catch (error) {
-      dispatch(setAlertFailure(error.response.data.errors));
+      dispatch(setAlertFailure(error.response.data));
       dispatch(setClientFailure());
     }
   }, []);
@@ -75,6 +75,7 @@ function useClientApi() {
   const _reqRemoveClient = useCallback(async (payload) => {
     dispatch(setClientInit());
     dispatch(removeClientInit());
+    dispatch(setAlertInit());
 
     try {
       const response = await axios.delete(endpoints.deleteClient(payload), {
@@ -86,14 +87,13 @@ function useClientApi() {
       dispatch(removeClientSuccess(response.data));
       dispatch(setAlertSuccess(["Client removed Successfully!"]));
     } catch (error) {
-      dispatch(setAlertFailure(error.response.data.errors));
+      dispatch(setAlertFailure(error.response.data));
       dispatch(removeClientFailure());
     }
   }, []);
 
   const _reqEditClient = useCallback(async (payload) => {
-    dispatch(setClientInit());
-    dispatch(removeClientInit());
+    dispatch(setAlertInit());
 
     try {
       const response = await axios.put(endpoints.editClient(payload), {
@@ -102,11 +102,11 @@ function useClientApi() {
         },
       });
 
-      dispatch(removeClientSuccess(response.data));
+      // dispatch(editClientSuccess(response.data));
       dispatch(setAlertSuccess(["Client updated Successfully!"]));
     } catch (error) {
-      dispatch(setAlertFailure(error.response.data.errors));
-      dispatch(removeClientFailure());
+      dispatch(setAlertFailure(error.response.data));
+      // dispatch(removeClientFailure());
     }
   }, []);
 

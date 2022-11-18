@@ -17,9 +17,10 @@ const alertSlice = createSlice({
       state.message = payload;
     },
     setAlertFailure: (state, { payload }) => {
+      const { errors, message } = payload;
       state.open = true;
       state.error = true;
-      state.message = payload;
+      state.message = errors || message;
     },
     [SET_UI_LOGOUT]: () => {
       return initialState;

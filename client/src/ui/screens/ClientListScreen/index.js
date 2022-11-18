@@ -1,18 +1,20 @@
 import React, { useState } from "react";
+import { useDispatch } from "react-redux";
 import Grid from "@mui/material/Grid";
 //
-import useClientApi from "../../../infrastructure/apiHooks/useClientApi";
+import { clientActions } from "../../../application/actions/client";
 import AddClientTemplate from "../../components/templates/AddClientTemplate";
 import EditClientTemplate from "../../components/templates/EditClientTemplate";
 import ClientListTemplate from "../../components/templates/ClientListTemplate";
 import ButtonState from "../../components/atoms/ButtonState";
 import TopBar from "../../components/molecules/TopBar";
 
+const { editClientSetId } = clientActions;
 function ClientListScreen() {
   const [isOpenAddClientModal, setOpenAddClientModal] = useState(false);
   const [isOpenEditClientModal, setOpenEditClientModal] = useState(false);
 
-  const api = useClientApi();
+  const dispatch = useDispatch();
 
   function onClickOpenAddClientModalHandle() {
     setOpenAddClientModal((prev) => !prev);
@@ -20,7 +22,7 @@ function ClientListScreen() {
 
   function onClickOpenEditClientModalHandle(value) {
     setOpenEditClientModal((prev) => !prev);
-    api.reqEditClient(value);
+    dispatch(editClientSetId(value));
   }
 
   return (

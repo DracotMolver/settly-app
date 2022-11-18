@@ -8,14 +8,18 @@ import ButtonState from "../../atoms/ButtonState";
 import UploadInput from "../../atoms/UploadInput";
 import defaultprops from "./settings/defaultprops";
 import proptypes from "./settings/proptypes";
+import useClientSelector from "../../../../application/selectors/client";
 
 function ClientForm({ onCloseModal, actionOn }) {
   const { control, handleSubmit, setValue } = useForm();
 
+  const { client } = useClientSelector();
   const api = useClientApi();
 
   function _onSubmitSuccessHandle(value) {
-    actionOn ? api.reqAddClient(value) : api.reqEditClient(value);
+    actionOn
+      ? api.reqAddClient(value)
+      : api.reqEditClient({ ...client, ...value });
     onCloseModal();
   }
 
@@ -28,7 +32,7 @@ function ClientForm({ onCloseModal, actionOn }) {
         render={({ field, fieldState: { error } }) => (
           <Field label="Name" required hasError={Boolean(error)} {...field} />
         )}
-        defaultValue=""
+        defaultValue={client?.name || ""}
       />
       <Controller
         name="email"
@@ -42,7 +46,7 @@ function ClientForm({ onCloseModal, actionOn }) {
             {...field}
           />
         )}
-        defaultValue=""
+        defaultValue={client?.email || ""}
       />
       <Controller
         name="picture"
