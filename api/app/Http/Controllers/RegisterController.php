@@ -2,14 +2,16 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\RegisterPostRequest;
-
 use Illuminate\Support\Facades\Hash;
 
+use App\Http\Requests\RegisterPostRequest;
 use App\Models\Admin;
+
+
 
 class RegisterController extends Controller
 {
+    protected $adminUser;
 
     public function __construct(Admin $adminUser)
     {

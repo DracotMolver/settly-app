@@ -24,4 +24,9 @@ class Admin extends Model
     {
         return $this->hasOne(Access::class);
     }
+
+    public function existWithEmail($email)
+    {
+        return $this->where('email', $email)->first();
+    }
 }

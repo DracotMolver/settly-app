@@ -17,6 +17,10 @@ return new class extends Migration
             $table->id();
             $table->string('token');
             $table->timestamps();
+            $table->foreignId('admin_id')
+                ->constrained()
+                ->onUpdate('cascade')
+                ->onDelete('cascade');
         });
     }
 

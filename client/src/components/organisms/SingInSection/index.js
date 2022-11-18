@@ -7,12 +7,7 @@ import ButtonState from "../../atoms/ButtonState";
 import useLoginApi from "../../../services/apiHooks/useLoginApi";
 
 function SingInSection() {
-  const { control, handleSubmit } = useForm({
-    defaultValues: {
-      email: "",
-      password: "",
-    },
-  });
+  const { control, handleSubmit } = useForm();
 
   const api = useLoginApi();
 
@@ -30,6 +25,7 @@ function SingInSection() {
             {...field}
           />
         )}
+        defaultValue=""
       />
       <Controller
         name="password"
@@ -44,6 +40,7 @@ function SingInSection() {
             {...field}
           />
         )}
+        defaultValue=""
       />
       <ButtonState text="Sign In" onPress={handleSubmit(api.reqLoginAdmin)} />
     </Grid>

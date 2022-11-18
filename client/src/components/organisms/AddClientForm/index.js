@@ -7,13 +7,7 @@ import ButtonState from "../../atoms/ButtonState";
 import UploadInput from "../../atoms/UploadInput";
 
 function AddClientForm() {
-  const { control, handleSubmit } = useForm({
-    defaultValues: {
-      name: "",
-      email: "",
-      picture: "",
-    },
-  });
+  const { control, handleSubmit } = useForm();
 
   function onSubmitSucces(value) {
     /*
@@ -36,6 +30,7 @@ function AddClientForm() {
         render={({ field, fieldState: { error } }) => (
           <Field label="Name" required hasError={Boolean(error)} {...field} />
         )}
+        defaultValue=""
       />
       <Controller
         name="email"
@@ -49,6 +44,7 @@ function AddClientForm() {
             {...field}
           />
         )}
+        defaultValue=""
       />
       <Controller
         name="picture"
@@ -60,6 +56,7 @@ function AddClientForm() {
             {...field}
           />
         )}
+        defaultValue=""
       />
       <ButtonState
         text="Add New Client"

@@ -21,7 +21,6 @@ use Illuminate\Support\Facades\Route;
 // });
 
 Route::apiResources([
-    'client' => ClientController::class,
     'login' => LoginController::class,
     'register' => RegisterController::class
 ]);

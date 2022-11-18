@@ -9,11 +9,13 @@ class Access extends Model
 {
     use HasFactory;
 
+    protected $fillable = ['token'];
+
     /**
      * Get the admin that has a single token
      */
     public function admin()
     {
-        return $this->hasOne(Admin::class);
+        return $this->belongsTo(Admin::class);
     }
 }
