@@ -1,9 +1,9 @@
 import axios from "axios";
 import { useCallback } from "react";
 import { useDispatch } from "react-redux";
-import { redirect } from "react-router-dom";
 //
-import { actionsClient } from "../../../application/actions/client";
+import { clientActions } from "../../../application/actions/client";
+import { alertActions } from "../../../application/actions/alert";
 import endpoints from "../../endpoints";
 
 const {
@@ -16,7 +16,9 @@ const {
   removeClientInit,
   removeClientSuccess,
   removeClientFailure,
-} = actionsClient;
+} = clientActions;
+
+const { setAlertInit, setAlertSuccess, setAlertFailure } = alertActions;
 
 function useClientApi() {
   const TOKEN = window.sessionStorage.getItem("token") || "";
@@ -25,6 +27,7 @@ function useClientApi() {
 
   const _reqAddClient = useCallback(async (payload) => {
     dispatch(setClientInit());
+    dispatch(setAlertInit());
 
     try {
       const response = await axios.post(endpoints.addClient, payload, {
@@ -34,7 +37,9 @@ function useClientApi() {
         },
       });
       dispatch(setClientSuccess(response?.data));
-    } catch (_) {
+      dispatch(setAlertSuccess('Added Client Successfully!'));
+    } catch (error) {
+      dispatch(setAlertFailure(error?.response?.data?.errors));
       dispatch(setClientFailure());
     }
   }, []);

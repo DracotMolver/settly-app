@@ -30,6 +30,6 @@ const registerSlice = createSlice({
 
 const { actions, reducer: register } = registerSlice;
 
-export const actionsRegister = actions;
+export const registerActions = actions;
 
 export default register;

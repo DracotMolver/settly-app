@@ -61,6 +61,6 @@ const clientSlice = createSlice({
 
 const { actions, reducer: client } = clientSlice;
 
-export const actionsClient = actions;
+export const clientActions = actions;
 
 export default client;

@@ -3,11 +3,11 @@ import { useCallback } from "react";
 import { useDispatch } from "react-redux";
 import { redirect } from "react-router-dom";
 //
-import { actionsAuth } from "../../../application/actions/auth";
+import { authActions } from "../../../application/actions/auth";
 import paths from "../../../ui/router/paths";
 import endpoints from "../../endpoints";
 
-const { setAuthInit, setAuthSuccess, setAuthFailure } = actionsAuth;
+const { setAuthInit, setAuthSuccess, setAuthFailure } = authActions;
 
 function useLoginApi() {
   const dispatch = useDispatch();
