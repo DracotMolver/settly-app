@@ -26,6 +26,7 @@ function ClientListScreen() {
       </Grid>
 
       <ClientListTemplate onPressOpenModalHandle={onPressOpenModalHandle} />
+
       <AddClientTemplate
         isOpenModal={isOpenModal}
         onClose={onPressOpenModalHandle}

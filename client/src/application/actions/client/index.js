@@ -5,18 +5,33 @@ const clientSlice = createSlice({
   name: "client",
   initialState: initialState,
   reducers: {
-    setAddClientInit: (state) => {
+    setClientInit: (state) => {
       state.fetching = true;
       state.fetched = false;
-      state.data = null;
       state.error = false;
     },
-    setAddClientSuccess: (state, { payload }) => {
+    addClientSuccess: (state, { payload }) => {
+      state.fetching = false;
+      state.fetched = true;
+      state.data = state.data.concat(payload);
+    },
+    addClientFailure: (state, { payload }) => {
+      state.fetching = false;
+      state.fetched = true;
+      state.error = payload;
+    },
+    getClientInit: (state) => {
+      state.fetching = true;
+      state.fetched = false;
+      state.error = false;
+      state.data = [];
+    },
+    getClientSuccess: (state, { payload }) => {
       state.fetching = false;
       state.fetched = true;
       state.data = payload;
     },
-    setAddClientFailure: (state, { payload }) => {
+    getClientFailure: (state, { payload }) => {
       state.fetching = false;
       state.fetched = true;
       state.error = payload;

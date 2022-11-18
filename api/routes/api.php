@@ -20,5 +20,5 @@ use App\Http\Controllers\RegisterController;
 Route::apiResources([
     'login' => LoginController::class,
     'register' => RegisterController::class,
-    'client' => ClientController::class
+    'clients' => ClientController::class,
 ]);

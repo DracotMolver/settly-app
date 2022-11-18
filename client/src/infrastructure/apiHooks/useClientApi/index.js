@@ -5,8 +5,14 @@ import { redirect } from "react-router-dom";
 import { actionsClient } from "../../../application/actions/client";
 import endpoints from "../../endpoints";
 
-const { setAddClientInit, setAddClientSuccess, setAddClientFailure } =
-  actionsClient;
+const {
+  setClientInit,
+  addClientSuccess,
+  addClientFailure,
+  getClientInit,
+  getClientSuccess,
+  getClientFailure,
+} = actionsClient;
 
 function useClientApi() {
   const TOKEN = window.sessionStorage.getItem("token") || "";
@@ -14,8 +20,7 @@ function useClientApi() {
   const dispatch = useDispatch();
 
   async function _reqAddClient(payload) {
-    console.log(payload);
-    dispatch(setAddClientInit());
+    dispatch(setClientInit());
 
     try {
       const response = await axios.post(endpoints.addClient, payload, {
@@ -24,14 +29,43 @@ function useClientApi() {
           Authorization: `Bearer ${TOKEN}`,
         },
       });
-      dispatch(setAddClientSuccess(response?.data));
+      dispatch(addClientSuccess(response?.data));
     } catch (error) {
-      dispatch(setAddClientFailure(error?.response?.data));
+      dispatch(addClientFailure(error?.response?.data));
     }
+  }
+
+  function _reqGetClients() {
+    let isMounted = true;
+
+    async function mainReqGetClients() {
+      dispatch(getClientInit());
+
+      try {
+        if (isMounted) {
+          const response = await axios.get(endpoints.getClients, {
+            headers: {
+              Authorization: `Bearer ${TOKEN}`,
+            },
+          });
+
+          dispatch(getClientSuccess(response?.data));
+        }
+      } catch (error) {
+        dispatch(getClientFailure(error?.response?.data));
+      }
+    }
+
+    mainReqGetClients();
+
+    return () => {
+      isMounted = false;
+    };
   }
 
   const actions = {
     reqAddClient: _reqAddClient,
+    reqGetClients: _reqGetClients,
   };
 
   return actions;

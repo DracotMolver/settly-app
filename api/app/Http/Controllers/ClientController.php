@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ClientPostRequest;
+
+use \Illuminate\Http\Request;
+
 use App\Models\Access;
 use App\Models\Client;
 
@@ -23,6 +26,21 @@ class ClientController extends Controller
         $this->access = $access;
 
         $this->middleware('auth.token');
+    }
+
+    /**
+     * retrieves all the clientes by admin
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function index(Request $request)
+    {
+        $adminUser = $this->access->findByToken($request->bearerToken())
+            ->admin()
+            ->first();
+
+        return response()->json($adminUser->clients, 200);
     }
 
     /**
@@ -47,13 +65,10 @@ class ClientController extends Controller
             $this->client
         );
 
+        $adminUser->refresh();
 
-        // // Processes the image to save it on the public folder
-        // $imageName = time() . '.' . $request->picture->extension();
-        // $request->picture->move(public_path('images'), $imageName);
+        $request->file('picture')->store('public');
 
-        // $foundClient = Client::find($client);
-
-        return response()->json(['data' => 'asdf'], 200);
+        return response()->json($adminUser->clients, 200);
     }
 }
