@@ -48,7 +48,9 @@ const clientSlice = createSlice({
     removeClientSuccess: (state, { payload }) => {
       _fetched(state);
 
-      state.data = state.data.filter((client) => client.id !== payload);
+      state.data = state.data.filter(
+        (client) => client.id !== Number(payload?.id || 0)
+      );
     },
     removeClientFailure: _error,
     [SET_UI_LOGOUT]: () => {
