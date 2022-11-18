@@ -1,6 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
 import initialState from "../../../domain/ui/register";
-import { SET_UI_LOGOUT } from "../logout";
 
 const registerSlice = createSlice({
   name: "register",
@@ -22,7 +21,7 @@ const registerSlice = createSlice({
       state.fetched = true;
       state.error = payload;
     },
-    [SET_UI_LOGOUT]: () => {
+    clearRegistroState: () => {
       return initialState;
     },
   },

@@ -1,6 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
 import initialState from "../../../domain/ui/alert";
-import { SET_UI_LOGOUT } from "../logout";
 
 const alertSlice = createSlice({
   name: "alert",
@@ -22,7 +21,7 @@ const alertSlice = createSlice({
       state.error = true;
       state.message = errors || message;
     },
-    [SET_UI_LOGOUT]: () => {
+    clearAlertState: () => {
       return initialState;
     },
   },

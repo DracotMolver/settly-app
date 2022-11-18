@@ -1,6 +1,4 @@
 import React, { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
@@ -8,24 +6,16 @@ import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 //
 import useAuthApi from "../../../../infrastructure/apiHooks/useAuthApi";
-import { setLogout } from "../../../../application/actions/logout";
+import useLogout from "../../../../application/actions/logout";
 import useAuthSelector from "../../../../application/selectors/auth";
-import paths from "../../../router/paths";
 
 function TopBar() {
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
-
   const { userName } = useAuthSelector();
+  const logout = useLogout();
+
   const api = useAuthApi();
 
   useEffect(api.reqGetAuthUser, []);
-
-  function _logout() {
-    window.sessionStorage.removeItem("token");
-    dispatch(setLogout());
-    navigate(paths.login, { replace: true });
-  }
 
   return (
     <Box sx={{ flexGrow: 1 }}>
@@ -35,8 +25,8 @@ function TopBar() {
             {`Hi ${userName}. Welcome to your admin account`}
           </Typography>
         </Toolbar>
-        <Button color="inherit" onClick={_logout}>
-          Log out
+        <Button color="inherit" onClick={logout}>
+          Logout
         </Button>
       </AppBar>
     </Box>
