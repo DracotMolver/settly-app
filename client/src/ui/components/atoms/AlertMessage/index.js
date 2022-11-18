@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Snackbar from "@mui/material/Snackbar";
 import Alert from "@mui/material/Alert";
 import { useDispatch } from "react-redux";
@@ -16,6 +16,23 @@ function AlertMessage() {
   function _onCloseAlertMessageHandle() {
     dispatch(setAlertInit());
   }
+
+  useEffect(() => {
+    let timer = null;
+    let isMounted = true;
+
+    if (open && !error) {
+      timer = setTimeout(() => {
+        _onCloseAlertMessageHandle();
+        clearTimeout(timer);
+      }, 3000);
+    }
+
+    return () => {
+      isMounted = false;
+      clearTimeout(timer);
+    };
+  }, [open, error]);
 
   return (
     <Snackbar

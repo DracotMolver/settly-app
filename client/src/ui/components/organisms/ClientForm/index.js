@@ -2,20 +2,20 @@ import React from "react";
 import { useForm, Controller } from "react-hook-form";
 import Grid from "@mui/material/Grid";
 //
+import useClientApi from "../../../../infrastructure/apiHooks/useClientApi";
 import Field from "../../atoms/Field";
 import ButtonState from "../../atoms/ButtonState";
 import UploadInput from "../../atoms/UploadInput";
-import useClientApi from "../../../../infrastructure/apiHooks/useClientApi";
 import defaultprops from "./settings/defaultprops";
 import proptypes from "./settings/proptypes";
 
-function AddClientForm({ onCloseModal }) {
+function ClientForm({ onCloseModal, actionOn }) {
   const { control, handleSubmit, setValue } = useForm();
 
   const api = useClientApi();
 
   function _onSubmitSuccessHandle(value) {
-    api.reqAddClient(value);
+    actionOn ? api.reqAddClient(value) : api.reqEditClient(value);
     onCloseModal();
   }
 
@@ -64,8 +64,8 @@ function AddClientForm({ onCloseModal }) {
   );
 }
 
-AddClientForm.defaultProps = defaultprops;
-AddClientForm.propTypes = proptypes;
-AddClientForm.displayName = "AddClientForm";
+ClientForm.defaultProps = defaultprops;
+ClientForm.propTypes = proptypes;
+ClientForm.displayName = "ClientForm";
 
-export default AddClientForm;
+export default ClientForm;

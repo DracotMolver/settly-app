@@ -1,5 +1,5 @@
 const defaultprops = {
-  onCloseModal: () => {},
+  onClickEditModal: () => {},
 };
 
 export default defaultprops;

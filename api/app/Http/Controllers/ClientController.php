@@ -95,6 +95,22 @@ class ClientController extends Controller
         return response()->json($content, $reqStatus);
     }
 
+    /**
+     * Update a client on the database.
+     *
+     * @param  App\Http\Requests\ClientPostRequest  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function udpate(ClientPostRequest $request)
+    {
+        $client = $this->client->find($request->client);
+
+
+        $this->client->name = $validatedData['name'];
+        $this->client->email = $validatedData['email'];
+    }
+
+
     protected function clientDoesNotExist($email)
     {
         return !$this->client->findByEmail($email);

@@ -4,6 +4,7 @@ const endpoints = {
   addClient: "http://localhost:8000/api/clients",
   getClients: "http://localhost:8000/api/clients",
   deleteClient: (id) => `http://localhost:8000/api/clients/${id}`,
+  editClient: (id) => `http://localhost:8000/api/clients/${id}`,
 };
 
 export default endpoints;

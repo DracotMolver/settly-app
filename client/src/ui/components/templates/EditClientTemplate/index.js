@@ -6,18 +6,18 @@ import ClientForm from "../../organisms/ClientForm";
 import defaultprops from "./settings/defaultprops";
 import proptypes from "./settings/proptypes";
 
-function AddClientTemplate({ isOpenModal, onClose }) {
+function EditClientTemplate({ isOpenModal, onClose }) {
   return (
     <Modal isOpen={isOpenModal} onClose={onClose}>
       <Card>
-        <ClientForm onCloseModal={onClose} actionOn="create"/>
+        <ClientForm onCloseModal={onClose} actionOn="edit"/>
       </Card>
     </Modal>
   );
 }
 
-AddClientTemplate.defaultProps = defaultprops;
-AddClientTemplate.propTypes = proptypes;
-AddClientTemplate.displayName = "AddClientTemplate";
+EditClientTemplate.defaultProps = defaultprops;
+EditClientTemplate.propTypes = proptypes;
+EditClientTemplate.displayName = "EditClientTemplate";
 
-export default AddClientTemplate;
+export default EditClientTemplate;

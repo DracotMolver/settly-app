@@ -2,11 +2,11 @@ import React, { useEffect } from "react";
 import { useForm, Controller } from "react-hook-form";
 import Grid from "@mui/material/Grid";
 //
-import Field from "../../atoms/Field";
-import ButtonState from "../../atoms/ButtonState";
 import useRegisterSelector from "../../../../application/selectors/register";
 import useRegisterApi from "../../../../infrastructure/apiHooks/userRegisterApi";
 import paths from "../../../router/paths";
+import Field from "../../atoms/Field";
+import ButtonState from "../../atoms/ButtonState";
 import TextLink from "../../molecules/TextLink";
 
 function SingUpForm() {

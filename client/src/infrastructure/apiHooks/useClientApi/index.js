@@ -91,10 +91,30 @@ function useClientApi() {
     }
   }, []);
 
+  const _reqEditClient = useCallback(async (payload) => {
+    dispatch(setClientInit());
+    dispatch(removeClientInit());
+
+    try {
+      const response = await axios.put(endpoints.editClient(payload), {
+        headers: {
+          Authorization: `Bearer ${TOKEN}`,
+        },
+      });
+
+      dispatch(removeClientSuccess(response.data));
+      dispatch(setAlertSuccess(["Client updated Successfully!"]));
+    } catch (error) {
+      dispatch(setAlertFailure(error.response.data.errors));
+      dispatch(removeClientFailure());
+    }
+  }, []);
+
   const actions = {
     reqAddClient: _reqAddClient,
     reqGetClients: _reqGetClients,
     reqRemoveClient: _reqRemoveClient,
+    reqEditClient: _reqEditClient,
   };
 
   return actions;

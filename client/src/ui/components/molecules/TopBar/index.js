@@ -8,8 +8,8 @@ import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 //
 import { setLogout } from "../../../../application/actions/logout";
-import paths from "../../../router/paths";
 import useAuthSelector from "../../../../application/selectors/auth";
+import paths from "../../../router/paths";
 
 function TopBar() {
   const navigate = useNavigate();

@@ -1,7 +1,7 @@
 import PropTypes from "prop-types";
 
 const proptypes = {
-  onCloseModal: PropTypes.func,
+  onClickEditModal: PropTypes.func,
 };
 
 export default proptypes;
