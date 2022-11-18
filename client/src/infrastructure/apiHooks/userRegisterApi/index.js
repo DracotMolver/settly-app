@@ -17,8 +17,8 @@ function useRegisterApi() {
     try {
       const response = await axios.post(endpoints.registerAdmin, payload);
       dispatch(setRegisterSuccess(response?.data));
-    } catch (error) {
-      dispatch(setRegisterFailure(error?.response?.data));
+    } catch (_) {
+      dispatch(setRegisterFailure());
     }
   }, []);
 

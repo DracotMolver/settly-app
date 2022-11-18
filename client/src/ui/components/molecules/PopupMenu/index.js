@@ -8,22 +8,28 @@ import PopupState, { bindTrigger, bindMenu } from "material-ui-popup-state";
 import defaultProps from "./settings/defaultprops";
 import proptypes from "./settings/proptypes";
 
-function PopupMenu({ onDelete, onEdit }) {
-  const _onDeleteHandle = useCallback((popupState) => {
-    if (onDelete && typeof onDelete === "function") {
-      onDelete();
-    }
+function PopupMenu({ onDelete, onEdit, data }) {
+  const _onDeleteHandle = useCallback(
+    (popupState) => {
+      if (onDelete && typeof onDelete === "function") {
+        onDelete(data);
+      }
 
-    popupState.close();
-  }, []);
+      popupState.close();
+    },
+    [data]
+  );
 
-  const _onEditHandle = useCallback((popupState) => {
-    if (onEdit && typeof onEdit === "function") {
-      onEdit();
-    }
+  const _onEditHandle = useCallback(
+    (popupState) => {
+      if (onEdit && typeof onEdit === "function") {
+        onEdit(data);
+      }
 
-    popupState.close();
-  }, []);
+      popupState.close();
+    },
+    [data]
+  );
 
   return (
     <PopupState variant="popover" popupId="demo-popup-menu">

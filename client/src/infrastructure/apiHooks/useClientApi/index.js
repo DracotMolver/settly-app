@@ -8,11 +8,12 @@ import endpoints from "../../endpoints";
 
 const {
   setClientInit,
-  addClientSuccess,
-  addClientFailure,
+  setClientSuccess,
+  setClientFailure,
   getClientInit,
   getClientSuccess,
   getClientFailure,
+  removeClientInit
 } = actionsClient;
 
 function useClientApi() {
@@ -30,9 +31,9 @@ function useClientApi() {
           Authorization: `Bearer ${TOKEN}`,
         },
       });
-      dispatch(addClientSuccess(response?.data));
-    } catch (error) {
-      dispatch(addClientFailure(error?.response?.data));
+      dispatch(setClientSuccess(response?.data));
+    } catch (_) {
+      dispatch(setClientFailure());
     }
   }, []);
 
@@ -52,8 +53,8 @@ function useClientApi() {
 
           dispatch(getClientSuccess(response?.data));
         }
-      } catch (error) {
-        dispatch(getClientFailure(error?.response?.data));
+      } catch (_) {
+        dispatch(getClientFailure());
       }
     }
 
@@ -64,9 +65,26 @@ function useClientApi() {
     };
   }, []);
 
+  const _reqRemoveClient = useCallback(async (payload) => {
+    dispatch(removeClientInit());
+
+    try {
+      const response = await axios.delete(endpoints.deleteClient(payload), {
+        headers: {
+          Authorization: `Bearer ${TOKEN}`,
+        },
+      });
+
+      dispatch(removeClientSuccess(response?.data));
+    } catch (_) {
+      dispatch(getClientFailure());
+    }
+  }, []);
+
   const actions = {
     reqAddClient: _reqAddClient,
     reqGetClients: _reqGetClients,
+    reqRemoveClient: _reqRemoveClient,
   };
 
   return actions;

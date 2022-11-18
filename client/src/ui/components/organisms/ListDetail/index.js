@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useCallback, useEffect } from "react";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import ListItemText from "@mui/material/ListItemText";
@@ -18,7 +18,12 @@ function ListDetail() {
     <Card>
       <List>
         {clients.map((client) => (
-          <ListItem secondaryAction={<PopupMenu />} key={client.email}>
+          <ListItem
+            secondaryAction={
+              <PopupMenu data={client.id} onDelete={api.reqRemoveClient} />
+            }
+            key={client.id}
+          >
             <ListItemText primary={client.name} secondary={client.email} />
           </ListItem>
         ))}

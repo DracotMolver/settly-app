@@ -1,40 +1,51 @@
 import { createSlice } from "@reduxjs/toolkit";
 import initialState from "../../../domain/entities/client";
 
+function _fetching(state) {
+  state.fetching = true;
+  state.fetched = false;
+  state.error = false;
+}
+
+function _fetched() {
+  state.fetching = false;
+  state.fetched = true;
+  state.error = false;
+}
+
+function _error(state) {
+  state.fetching = false;
+  state.fetched = true;
+  state.error = true;
+}
+
 const clientSlice = createSlice({
   name: "client",
   initialState: initialState,
   reducers: {
-    setClientInit: (state) => {
-      state.fetching = true;
-      state.fetched = false;
-      state.error = false;
-    },
-    addClientSuccess: (state, { payload }) => {
-      state.fetching = false;
-      state.fetched = true;
+    setClientInit: _fetching,
+    setClientSuccess: (state, { payload }) => {
+      _fetched(state);
+
       state.data = state.data.concat(payload);
     },
-    addClientFailure: (state, { payload }) => {
-      state.fetching = false;
-      state.fetched = true;
-      state.error = payload;
-    },
+    setClientFailure: _error,
     getClientInit: (state) => {
-      state.fetching = true;
-      state.fetched = false;
-      state.error = false;
+      _fetching(state);
+
       state.data = [];
     },
     getClientSuccess: (state, { payload }) => {
-      state.fetching = false;
-      state.fetched = true;
+      _fetched(state);
+
       state.data = payload;
     },
-    getClientFailure: (state, { payload }) => {
-      state.fetching = false;
-      state.fetched = true;
-      state.error = payload;
+    getClientFailure: _error,
+    removeClientInit: _fetching,
+    removeClientSuccess: (state, { payload }) => {
+      _fetched(state);
+
+      state.data = state.data.filter((client) => client.id !== payload);
     },
   },
 });
