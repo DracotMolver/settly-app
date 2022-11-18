@@ -11,6 +11,7 @@ const authSlice = createSlice({
       state.data.token = "";
       state.data.isLogged = false;
       state.error = false;
+      state.user = {};
     },
     setAuthSuccess: (state, { payload }) => {
       state.fetching = false;
@@ -18,17 +19,19 @@ const authSlice = createSlice({
       state.data.token = payload?.token || "";
       state.data.isLogged = true;
       state.error = false;
+      state.user = payload?.admin;
 
       if (!window.sessionStorage.getItem("token") && payload?.token) {
         window.sessionStorage.setItem("token", payload.token);
       }
     },
-    setAuthFailure: (state, { payload }) => {
+    setAuthFailure: (state) => {
       state.fetching = false;
       state.fetched = true;
       state.data.token = "";
       state.data.isLogged = false;
-      state.error = payload;
+      state.user = {};
+      state.error = true;
     },
   },
 });

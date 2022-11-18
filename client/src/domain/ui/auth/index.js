@@ -3,7 +3,8 @@ const TOKEN = window.sessionStorage.getItem("token") || "";
 const initialState = {
   data: {
     token: TOKEN,
-    isLogged: TOKEN,
+    isLogged: Boolean(TOKEN),
+    user: {}
   },
   feching: false,
   fetched: false,

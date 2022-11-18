@@ -6,6 +6,8 @@ import Field from "../../atoms/Field";
 import ButtonState from "../../atoms/ButtonState";
 import UploadInput from "../../atoms/UploadInput";
 import useClientApi from "../../../../infrastructure/apiHooks/useClientApi";
+import defaultprops from "./settings/defaultprops";
+import proptypes from "./settings/proptypes";
 
 function AddClientForm({ onCloseModal }) {
   const { control, handleSubmit, setValue } = useForm();

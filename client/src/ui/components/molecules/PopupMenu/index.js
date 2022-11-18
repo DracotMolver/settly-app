@@ -39,10 +39,10 @@ function PopupMenu({ onDelete, onEdit, data }) {
             <MoreVertIcon />
           </Button>
           <Menu {...bindMenu(popupState)}>
-            <MenuItem onClick={_onDeleteHandle.bind(null, popupState)}>
+            <MenuItem onClick={_onEditHandle.bind(null, popupState)}>
               Editar
             </MenuItem>
-            <MenuItem onClick={_onEditHandle.bind(null, popupState)}>
+            <MenuItem onClick={_onDeleteHandle.bind(null, popupState)}>
               Eliminar
             </MenuItem>
           </Menu>

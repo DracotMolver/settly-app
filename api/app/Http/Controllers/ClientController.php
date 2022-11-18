@@ -58,8 +58,12 @@ class ClientController extends Controller
     public function destroy(Request $request)
     {
         $clientId = $request->client;
-        $this->client->delete($clientId);
-        return response()->json(['data' => $clientId], 200);
+        $isDeleted = $this->client->delete($clientId);
+
+        $msg = $isDeleted ? $clientId : null;
+        $reqStatus = $isDeleted ? 200 : 404;
+
+        return response()->json(['id' => $clientId], $reqStatus);
     }
 
     /**
