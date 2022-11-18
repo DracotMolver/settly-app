@@ -8,10 +8,10 @@ import { Provider } from "react-redux";
 import CssBaseline from "@mui/material/CssBaseline";
 import { ThemeProvider } from "@mui/material/styles";
 //
-import { store } from "./services/redux/store";
-//
-import router from "./router";
+import store from "./application/config/store";
+import router from "./ui/router";
 import theme from "./theme";
+//
 
 const container = document.getElementById("root");
 const root = createRoot(container);
