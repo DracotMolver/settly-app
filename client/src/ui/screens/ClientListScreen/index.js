@@ -9,7 +9,7 @@ import TopBar from "../../components/molecules/TopBar";
 function ClientListScreen() {
   const [isOpenModal, setIsOpenModal] = useState();
 
-  function onPressOpenModalHandle() {
+  function onClickOpenModalHandle() {
     setIsOpenModal((prev) => !prev);
   }
 
@@ -21,15 +21,15 @@ function ClientListScreen() {
         <ButtonState
           isPrimary
           text="Add Client"
-          onPress={onPressOpenModalHandle}
+          onClick={onClickOpenModalHandle}
         />
       </Grid>
 
-      <ClientListTemplate onPressOpenModalHandle={onPressOpenModalHandle} />
+      <ClientListTemplate onClickOpenModalHandle={onClickOpenModalHandle} />
 
       <AddClientTemplate
         isOpenModal={isOpenModal}
-        onClose={onPressOpenModalHandle}
+        onClose={onClickOpenModalHandle}
       />
     </Grid>
   );

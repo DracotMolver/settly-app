@@ -10,7 +10,7 @@ function AddClientTemplate({ isOpenModal, onClose }) {
   return (
     <Modal isOpen={isOpenModal} onClose={onClose}>
       <Card>
-        <AddClientForm />
+        <AddClientForm onCloseModal={onClose} />
       </Card>
     </Modal>
   );

@@ -6,7 +6,7 @@ const proptypes = {
   hasError: PropTypes.bool,
   isSuccess: PropTypes.bool,
   text: PropTypes.string.isRequired,
-  onPress: PropTypes.func.isRequired,
+  onClick: PropTypes.func.isRequired,
 };
 
 export default proptypes;

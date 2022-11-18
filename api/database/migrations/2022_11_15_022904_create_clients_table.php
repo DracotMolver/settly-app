@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('name');
             $table->string('email', 320)->unique();
             $table->timestamps();
+            $table->softDeletes();
             $table->foreignId('admin_id')
                 ->constrained()
                 ->onUpdate('cascade')

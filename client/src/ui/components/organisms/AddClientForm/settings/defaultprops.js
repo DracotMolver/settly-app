@@ -1,7 +1,5 @@
 const defaultprops = {
-  helpText: "",
-  linkText: "",
-  to: "",
+  onCloseModal: () => {},
 };
 
 export default defaultprops;

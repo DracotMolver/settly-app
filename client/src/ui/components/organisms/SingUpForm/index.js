@@ -6,6 +6,8 @@ import Field from "../../atoms/Field";
 import ButtonState from "../../atoms/ButtonState";
 import useRegisterSelector from "../../../../application/selectors/register";
 import useRegisterApi from "../../../../infrastructure/apiHooks/userRegisterApi";
+import paths from "../../../router/paths";
+import TextLink from "../../molecules/TextLink";
 
 function SingUpForm() {
   const { control, handleSubmit, reset } = useForm();
@@ -78,8 +80,9 @@ function SingUpForm() {
       />
       <ButtonState
         text="Sign Up"
-        onPress={handleSubmit(api.reqRegisterAdmin)}
+        onClick={handleSubmit(api.reqRegisterAdmin)}
       />
+      <TextLink helpText="Back to" linkText="login" to={paths.login} />
     </Grid>
   );
 }

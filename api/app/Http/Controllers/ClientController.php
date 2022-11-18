@@ -28,6 +28,15 @@ class ClientController extends Controller
         $this->middleware('auth.token');
     }
 
+    protected function getAdminUser($request)
+    {
+        $adminUser = $this->access->findByToken($request->bearerToken())
+            ->admin()
+            ->first();
+
+        return $adminUser;
+    }
+
     /**
      * retrieves all the clientes by admin
      *
@@ -36,11 +45,21 @@ class ClientController extends Controller
      */
     public function index(Request $request)
     {
-        $adminUser = $this->access->findByToken($request->bearerToken())
-            ->admin()
-            ->first();
-
+        $adminUser = $this->getAdminUser($request);
         return response()->json($adminUser->clients, 200);
+    }
+
+    /**
+     * remove a single client by admin
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy(Request $request)
+    {
+        $clientId = $request->client;
+        $this->client->delete($clientId);
+        return response()->json(['data' => $clientId], 200);
     }
 
     /**
@@ -57,9 +76,7 @@ class ClientController extends Controller
         $this->client->email = $validatedData['email'];
 
 
-        $adminUser = $this->access->findByToken($request->bearerToken())
-            ->admin()
-            ->first();
+        $adminUser = $this->getAdminUser($request);
 
         $adminUser->clients()->save(
             $this->client

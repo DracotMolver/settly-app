@@ -5,8 +5,9 @@ import Link from "@mui/material/Link";
 import Typography from "@mui/material/Typography";
 //
 import defaultprops from "./settings/defaultprops";
+import proptypes from "./settings/proptypes";
 
-function TextLink({ helpText, linkText }) {
+function TextLink({ helpText, linkText, to }) {
   return (
     <Grid container item>
       {helpText && (
@@ -14,7 +15,7 @@ function TextLink({ helpText, linkText }) {
           {helpText}
         </Typography>
       )}
-      <Link component={LinkRouter} to="/sing-up" underline="hover" rel="noreferrer">
+      <Link component={LinkRouter} to={to} underline="hover" rel="noreferrer">
         {linkText}
       </Link>
     </Grid>
@@ -22,6 +23,7 @@ function TextLink({ helpText, linkText }) {
 }
 
 TextLink.deafultProps = defaultprops;
+TextLink.protoTypes = proptypes;
 TextLink.displayName = "TextLink";
 
 export default TextLink;

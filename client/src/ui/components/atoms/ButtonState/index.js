@@ -12,14 +12,14 @@ function ButtonState({
   disabled,
   hasError,
   text,
-  onPress,
+  onClick,
 }) {
   return (
     <Grid item mt={3} mb={3}>
       <Button
         variant={isPrimary ? "contained" : "outlined"}
         disabled={disabled}
-        onClick={onPress}
+        onClick={onClick}
         {...getRestOfStates(hasError, isSuccess)}
       >
         {text}

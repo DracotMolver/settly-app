@@ -7,7 +7,7 @@ function _fetching(state) {
   state.error = false;
 }
 
-function _fetched() {
+function _fetched(state) {
   state.fetching = false;
   state.fetched = true;
   state.error = false;
@@ -30,6 +30,7 @@ const clientSlice = createSlice({
       state.data = state.data.concat(payload);
     },
     setClientFailure: _error,
+    //
     getClientInit: (state) => {
       _fetching(state);
 
@@ -41,12 +42,14 @@ const clientSlice = createSlice({
       state.data = payload;
     },
     getClientFailure: _error,
+    //
     removeClientInit: _fetching,
     removeClientSuccess: (state, { payload }) => {
       _fetched(state);
 
       state.data = state.data.filter((client) => client.id !== payload);
     },
+    removeClientFailure: _error,
   },
 });
 

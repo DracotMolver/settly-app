@@ -7,10 +7,15 @@ import ButtonState from "../../atoms/ButtonState";
 import UploadInput from "../../atoms/UploadInput";
 import useClientApi from "../../../../infrastructure/apiHooks/useClientApi";
 
-function AddClientForm() {
+function AddClientForm({ onCloseModal }) {
   const { control, handleSubmit, setValue } = useForm();
 
   const api = useClientApi();
+
+  function _onSubmitSuccessHandle() {
+    api.reqAddClient();
+    onCloseModal();
+  }
 
   return (
     <Grid container item>
@@ -51,12 +56,14 @@ function AddClientForm() {
       />
       <ButtonState
         text="Add New Client"
-        onPress={handleSubmit(api.reqAddClient)}
+        onClick={handleSubmit(_onSubmitSuccessHandle)}
       />
     </Grid>
   );
 }
 
+AddClientForm.defaultProps = defaultprops;
+AddClientForm.propTypes = proptypes;
 AddClientForm.displayName = "AddClientForm";
 
 export default AddClientForm;

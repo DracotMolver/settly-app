@@ -42,7 +42,7 @@ function SingInSection() {
         )}
         defaultValue=""
       />
-      <ButtonState text="Sign In" onPress={handleSubmit(api.reqLoginAdmin)} />
+      <ButtonState text="Sign In" onClick={handleSubmit(api.reqLoginAdmin)} />
     </Grid>
   );
 }

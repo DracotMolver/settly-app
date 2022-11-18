@@ -10,7 +10,7 @@ import proptypes from "./settings/proptypes";
 const UploadInput = forwardRef(({ text, setValue, name }, ref) => {
   const [resultImage, setResultImage] = useState(null);
 
-  const onPressFileUploadHandle = useCallback((event) => {
+  const onClickFileUploadHandle = useCallback((event) => {
     if (event.target.files) {
       const file = event.target.files[0];
       const reader = new FileReader();
@@ -42,7 +42,7 @@ const UploadInput = forwardRef(({ text, setValue, name }, ref) => {
           type="file"
           accept=".jpge,.jpg,.png,.webp"
           hidden
-          onChange={onPressFileUploadHandle}
+          onChange={onClickFileUploadHandle}
           ref={ref}
         />
       </Button>

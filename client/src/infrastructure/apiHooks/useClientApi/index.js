@@ -13,7 +13,9 @@ const {
   getClientInit,
   getClientSuccess,
   getClientFailure,
-  removeClientInit
+  removeClientInit,
+  removeClientSuccess,
+  removeClientFailure,
 } = actionsClient;
 
 function useClientApi() {
@@ -53,7 +55,7 @@ function useClientApi() {
 
           dispatch(getClientSuccess(response?.data));
         }
-      } catch (_) {
+      } catch (err) {
         dispatch(getClientFailure());
       }
     }
@@ -77,7 +79,7 @@ function useClientApi() {
 
       dispatch(removeClientSuccess(response?.data));
     } catch (_) {
-      dispatch(getClientFailure());
+      dispatch(removeClientFailure());
     }
   }, []);
 
