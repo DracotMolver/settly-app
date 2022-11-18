@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('accesses', function (Blueprint $table) {
             $table->id();
-            $table->string('token');
+            $table->longText('token');
             $table->timestamps();
             $table->foreignId('admin_id')
                 ->constrained()

@@ -8,9 +8,9 @@ import endpoints from "../../endpoints";
 const { setAddClientInit, setAddClientSuccess, setAddClientFailure } =
   actionsClient;
 
-const TOKEN = window.sessionStorage.getItem("token") || "";
-
 function useClientApi() {
+  const TOKEN = window.sessionStorage.getItem("token") || "";
+
   const dispatch = useDispatch();
 
   async function _reqAddClient(payload) {

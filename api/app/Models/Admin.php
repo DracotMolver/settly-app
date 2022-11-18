@@ -9,6 +9,8 @@ class Admin extends Model
 {
     use HasFactory;
 
+    protected $hidden = ['password'];
+
     /**
      * Get all the clients by admin
      */
@@ -25,7 +27,7 @@ class Admin extends Model
         return $this->hasOne(Access::class);
     }
 
-    public function existWithEmail($email)
+    public function findByEmail($email)
     {
         return $this->where('email', $email)->first();
     }

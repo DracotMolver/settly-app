@@ -12,7 +12,8 @@ class Client extends Model
     /**
      * Get the admin of one client.
      */
-    public function admin() {
-        return $this->hasOne(Admin::class);
+    public function admin()
+    {
+        return $this->belongsTo(Admin::class);
     }
 }

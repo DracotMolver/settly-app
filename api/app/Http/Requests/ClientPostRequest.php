@@ -3,9 +3,20 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Crypt;
+
+use App\Models\Access;
 
 class ClientPostRequest extends FormRequest
 {
+
+    protected $access;
+
+    function __construct(Access $access) 
+    {
+        $this->access = $access;
+    }
+
     /**
      * Determine if the user is authorized to make this request.
      *
@@ -13,7 +24,9 @@ class ClientPostRequest extends FormRequest
      */
     public function authorize()
     {
-        return true;
+        $authAdmin = $this->access->findByToken($this->bearerToken());
+
+        return $authAdmin;
     }
 
     /**

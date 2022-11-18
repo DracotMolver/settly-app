@@ -3,23 +3,24 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ClientPostRequest;
-use App\Models\Admin;
+use App\Models\Access;
 use App\Models\Client;
-
 
 class ClientController extends Controller
 {
 
     protected $client;
+    protected $access;
 
     /**
      * Instantiate a new controller instance.
      *
      * @return void
      */
-    public function __construct(Client $client)
+    public function __construct(Client $client, Access $access)
     {
-        $this->$client = $client;
+        $this->client = $client;
+        $this->access = $access;
 
         $this->middleware('auth.token');
     }
@@ -37,11 +38,15 @@ class ClientController extends Controller
         $this->client->name = $validatedData['name'];
         $this->client->email = $validatedData['email'];
 
-        // // don't block the database save action
-        // // $id = Auth::id();
-        // $adminUser = Admin::find(1);
 
-        // $adminUser->clients()->save($client);
+        $adminUser = $this->access->findByToken($request->bearerToken())
+            ->admin()
+            ->first();
+
+        $adminUser->clients()->save(
+            $this->client
+        );
+
 
         // // Processes the image to save it on the public folder
         // $imageName = time() . '.' . $request->picture->extension();
@@ -49,11 +54,6 @@ class ClientController extends Controller
 
         // $foundClient = Client::find($client);
 
-        // return response()->json([
-        //     'data' => [
-        //         'name' => $foundClient->toJson()
-        //     ],
-        //     'message' => 'data saved successfully'
-        // ]);
+        return response()->json(['data' => 'asdf'], 200);
     }
 }

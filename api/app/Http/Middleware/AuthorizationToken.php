@@ -6,6 +6,8 @@ use Closure;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Crypt;
+use Illuminate\Contracts\Encryption\DecryptException;
 
 use App\Models\Access;
 
@@ -33,16 +35,25 @@ class AuthorizationToken
         $token = $request->bearerToken();
 
         if ($this->isNotEmptyToken($token)) {
-            // if ($foundtoken) {
-            return $next($request);
-            // }
+            try {
+                $decrypted = $this->getValuesFromToken($token);
+                // TODO revisar la fecha, si no, no permitir entrar
+                return $next($request);
+            } catch (DecryptException $e) {
+                //
+            }
         }
 
         return response()->json(['error' => 'Unauthorized'], 401);
     }
 
+    protected function getValuesFromToken($token)
+    {
+        return Crypt::decryptString($token);
+    }
 
-    private function isNotEmptyToken($token)
+
+    protected function isNotEmptyToken($token)
     {
         return Str::of($token)->trim()->isNotEmpty();
     }

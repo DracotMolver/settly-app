@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\Crypt;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Collection;
 
 use App\Http\Requests\LoginPostRequest;
 use App\Models\Access;
@@ -17,11 +19,6 @@ class LoginController extends Controller
         $this->adminUser = $adminUser;
     }
 
-    protected function isValidPassWord($requestPassword, $adminUserPassword)
-    {
-        return Hash::check($requestPassword, $adminUserPassword);
-    }
-
     /**
      * Store a new Admin in the database.
      *
@@ -32,7 +29,7 @@ class LoginController extends Controller
     {
         $validatedData = $request->validated();
 
-        $foundAmdinUser = $this->adminUser->existWithEmail($validatedData['email']);
+        $foundAmdinUser = $this->adminUser->findByEmail($validatedData['email']);
 
         $dataContent = [];
         $reStatus = 422;
@@ -40,19 +37,14 @@ class LoginController extends Controller
         if ($foundAmdinUser) {
             if ($this->isValidPassWord($validatedData['password'], $foundAmdinUser->password)) {
                 // Create token to send to the front
-                $token = Crypt::encryptString(
-                    [
-                        'expDate' => now()->addDay(),
-                        'email' => $foundAmdinUser->email
-                    ]
-                );
+                $token = $this->makeToken($foundAmdinUser->email);
 
                 // Safe the token on the Access model
                 $saved = $foundAmdinUser->access()->save(new Access([
                     'token' => $token
                 ]));
 
-                $dataContent = $saved ? ['token' => $token] : [];
+                $dataContent = $saved ? ['token' => $token, 'admin' => $foundAmdinUser->toJson()] : [];
                 $reStatus = $saved ? 200 : 422;
             } else {
                 // Error Messsage
@@ -65,5 +57,20 @@ class LoginController extends Controller
 
 
         return  response()->json($dataContent, $reStatus);
+    }
+
+    protected function isValidPassWord($requestPassword, $adminUserPassword)
+    {
+        return Hash::check($requestPassword, $adminUserPassword);
+    }
+
+    protected function makeToken($email)
+    {
+        return Crypt::encryptString(
+            collect([
+                'expDate' => now()->addDay(),
+                'email' => $email
+            ])->toJson()
+        );
     }
 }
