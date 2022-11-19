@@ -10,7 +10,7 @@ This will download the images for"
 *  **api**: It has laravel, and php.
 * **db**: It has MySQL.
 
-> IMPORTANT! if the db folder is not found in the root of this project, please create it.
+> IMPORTANT! **Create the db folder on the root of this project. It is ignored on the gitignore file**
 
 
 ### Access to the client
