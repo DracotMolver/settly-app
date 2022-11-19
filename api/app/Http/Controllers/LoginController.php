@@ -35,7 +35,7 @@ class LoginController extends Controller
         $reStatus = 422;
 
         if ($foundAmdinUser) {
-            if ($this->isValidPassWord($validatedData['password'], $foundAmdinUser->password)) {
+            if ($this->isValidPassword($validatedData['password'], $foundAmdinUser->password)) {
                 // Create token to send to the front
                 $token = $this->makeToken($foundAmdinUser->email);
 
@@ -59,7 +59,7 @@ class LoginController extends Controller
         return  response()->json($dataContent, $reStatus);
     }
 
-    protected function isValidPassWord($requestPassword, $adminUserPassword)
+    protected function isValidPassword($requestPassword, $adminUserPassword)
     {
         return Hash::check($requestPassword, $adminUserPassword);
     }

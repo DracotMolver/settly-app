@@ -11,11 +11,6 @@ class RegisterTest extends TestCase
 
     use RefreshDatabase;
 
-    /**
-     * Insert a new admin succefully.
-     *
-     * @return void
-     */
     public function test_insert_new_admin_succcefully()
     {
         $response = $this->post("api/register", [
@@ -29,11 +24,6 @@ class RegisterTest extends TestCase
         $response->assertJson(["message" => "success"]);
     }
 
-    /**
-     * Insert a new admin succefully.
-     *
-     * @return void
-     */
     public function test_insert_new_admin_and_return_it()
     {
         $response = $this->post("api/register", [
@@ -52,11 +42,6 @@ class RegisterTest extends TestCase
     }
 
 
-    /**
-     * Insert a new admin succefully.
-     *
-     * @return void
-     */
     public function test_failed_two_names()
     {
         $fakeEmail = fake()->unique()->safeEmail();
@@ -76,11 +61,6 @@ class RegisterTest extends TestCase
         ]);
     }
 
-    /**
-     * Insert a new admin succefully.
-     *
-     * @return void
-     */
     public function test_password_and_password_confirmation_do_not_match()
     {
         $fakeEmail = fake()->unique()->safeEmail();
