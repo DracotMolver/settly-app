@@ -6,9 +6,9 @@ First, make sure you have installed Docker Desktop, otherwise go to the next lin
 
 This will download the images for"
 
-**client**: It has node (to install the dependencies) and reactjs
-**api**: It has laravel, and php.
-**db**: It has MySQL.
+* **client**: It has node (to install the dependencies) and reactjs
+*  **api**: It has laravel, and php.
+* **db**: It has MySQL.
 
 > IMPORTANT! if the db folder is not found in the root of this project, please create it.
 
