@@ -68,7 +68,7 @@ class LoginController extends Controller
     {
         return Crypt::encryptString(
             collect([
-                'expDate' => now()->addDay(),
+                'expDate' => now()->addMinutes(30)->getTimestamp(),
                 'email' => $email
             ])->toJson()
         );

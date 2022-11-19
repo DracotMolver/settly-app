@@ -16,10 +16,11 @@ const alertSlice = createSlice({
       state.message = payload;
     },
     setAlertFailure: (state, { payload }) => {
-      const { errors, message } = payload;
+      console.log(payload)
+      const { errors, message, error } = payload;
       state.open = true;
       state.error = true;
-      state.message = errors || message;
+      state.message = errors || message || error;
     },
     clearAlertState: () => {
       return initialState;

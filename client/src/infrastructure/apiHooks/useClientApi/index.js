@@ -62,7 +62,8 @@ function useClientApi() {
 
           dispatch(getClientSuccess(response.data));
         }
-      } catch (err) {
+      } catch (error) {
+        dispatch(setAlertFailure(error.response.data));
         dispatch(getClientFailure());
       }
     }

@@ -37,8 +37,12 @@ class AuthorizationToken
         if ($this->isNotEmptyToken($token)) {
             try {
                 $decrypted = $this->getValuesFromToken($token);
-                // TODO revisar la fecha, si no, no permitir entrar
-                return $next($request);
+
+                if (now()->getTimestamp() < ($decrypted["expDate"])) {
+                    return $next($request);
+                }
+
+                return response()->json(['error' => 'Unauthorized'], 401);
             } catch (DecryptException $e) {
                 //
             }
@@ -49,7 +53,7 @@ class AuthorizationToken
 
     protected function getValuesFromToken($token)
     {
-        return Crypt::decryptString($token);
+        return json_decode(Crypt::decryptString($token), true);
     }
 
 
